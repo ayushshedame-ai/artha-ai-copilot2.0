@@ -16,7 +16,7 @@ self.addEventListener('push', (event) => {
   try {
     payload = event.data.json();
   } catch {
-    payload = { title: 'Artha AI', body: event.data.text(), data: {} };
+    payload = { title: 'Artha Tech', body: event.data.text(), data: {} };
   }
 
   const { title, body, icon, badge, data } = payload;

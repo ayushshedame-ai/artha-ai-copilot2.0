@@ -172,7 +172,7 @@ export default function App() {
 
           {/* ── Mobile top header ── */}
           <header className="mobile-header">
-            <span className="mobile-header-logo">⚡ Artha AI</span>
+            <span className="mobile-header-logo">⚡ Artha Tech</span>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
               <NotificationBell />
               <button
@@ -200,7 +200,7 @@ export default function App() {
           {/* ── Desktop / tablet sidebar ── */}
           <aside className="sidebar">
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 4px', marginBottom: 4 }}>
-              <h1 style={{ margin: 0 }}>Artha AI</h1>
+              <h1 style={{ margin: 0 }}>Artha Tech</h1>
               <NotificationBell />
             </div>
             <nav>

@@ -47,7 +47,7 @@ export default function SuggestionBox() {
       // Prevent duplicate notification popups
       if (localStorage.getItem(nId)) return;
 
-      new Notification(`🧠 Artha AI: ${s.direction} setup on ${s.symbol}`, {
+      new Notification(`🧠 Artha Tech: ${s.direction} setup on ${s.symbol}`, {
         body: `Confidence: ${s.confidence}% | Target: ₹${s.target ?? 'N/A'} | Stop: ₹${s.stopLoss ?? 'N/A'}`,
         icon: '/favicon.ico',
         tag: s.symbol,

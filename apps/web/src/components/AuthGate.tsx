@@ -34,7 +34,7 @@ async function registerBiometric(): Promise<string | null> {
     const cred = await navigator.credentials.create({
       publicKey: {
         challenge,
-        rp: { name: 'Artha AI Copilot', id: window.location.hostname },
+        rp: { name: 'Artha Tech Copilot', id: window.location.hostname },
         user: {
           id: new TextEncoder().encode('artha-owner'),
           name: 'artha@copilot',
@@ -383,7 +383,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   const logoBlock = (
     <div style={{ marginBottom: 30, textAlign: 'center' }}>
       <div style={{ fontSize: 52, marginBottom: 6, filter: 'drop-shadow(0 0 20px rgba(99,102,241,0.6))' }}>⚡</div>
-      <div style={{ fontSize: 24, fontWeight: 800, color: '#fff', letterSpacing: '-0.5px' }}>Artha AI</div>
+      <div style={{ fontSize: 24, fontWeight: 800, color: '#fff', letterSpacing: '-0.5px' }}>Artha Tech</div>
       <div style={{ fontSize: 13, color: '#6366f1', marginTop: 3, fontWeight: 500 }}>Copilot — Secured</div>
     </div>
   );
@@ -539,7 +539,7 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
         <div style={{ marginTop: 16, padding: '10px 12px', borderRadius: 10,
           background: 'rgba(245,158,11,0.07)', border: '1px solid rgba(245,158,11,0.2)' }}>
           <div style={{ fontSize: 12, color: '#fbbf24', lineHeight: 1.6 }}>
-            ⚠️ <strong>One-time setup.</strong> No one will be able to access Artha AI without your biometric or PIN. If you forget your PIN, you must clear your browser's site data to reset.
+            ⚠️ <strong>One-time setup.</strong> No one will be able to access Artha Tech without your biometric or PIN. If you forget your PIN, you must clear your browser's site data to reset.
           </div>
         </div>
       </div>
