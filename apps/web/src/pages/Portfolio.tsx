@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import MarketSessionBanner from '../components/MarketSessionBanner';
 import { getPositions, getPaperTrades } from '../services/api';
+import { supabase, fetchUserPortfolio } from '../services/supabaseClient';
 
 const BASE = '/api';
 
@@ -108,14 +109,42 @@ export default function Portfolio() {
     summary: { winRate: number; totalPnL: number; totalTrades: number; avgRMultiple: number; sharpe?: number };
   }>({ trades: [], summary: { winRate: 0, totalPnL: 0, totalTrades: 0, avgRMultiple: 0 } });
 
-  // Fetch all data on mount + tab change
+  // User session state
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+
+  // Fetch user data on mount
   useEffect(() => {
     setHoldingsLoading(true);
-    fetch(`${BASE}/portfolio`)
-      .then(r => r.json())
-      .then(setHoldingsData)
-      .catch(() => {})
-      .finally(() => setHoldingsLoading(false));
+
+    supabase.auth.getUser().then(async ({ data }) => {
+      const user = data.user;
+      if (user) {
+        setUserEmail(user.email || 'User');
+        const userPort = await fetchUserPortfolio(user.id);
+        if (userPort && userPort.holdings_json) {
+          const holdings = userPort.holdings_json;
+          const totalVal = holdings.reduce((sum: number, h: any) => sum + (h.currentValue || 0), 0);
+          const totalPnl = holdings.reduce((sum: number, h: any) => sum + (h.pnl || 0), 0);
+          setHoldingsData({
+            holdings,
+            totalValue: totalVal,
+            overallPnl: totalPnl,
+            availableFunds: userPort.cash_balance || 100000,
+            connected: true,
+            broker: 'Supabase Isolated Account',
+          });
+          setHoldingsLoading(false);
+          return;
+        }
+      }
+
+      // Fallback API fetch if no Supabase portfolio found yet
+      fetch(`${BASE}/portfolio`)
+        .then(r => r.json())
+        .then(setHoldingsData)
+        .catch(() => {})
+        .finally(() => setHoldingsLoading(false));
+    });
 
     getPositions().then(setPositionsData);
     getPaperTrades().then(setPaperData);

@@ -12,6 +12,7 @@ import SandboxPage from './pages/Sandbox';
 import BrokerSettings from './pages/BrokerSettings';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { AuthGate } from './components/AuthGate';
+import { supabase, signOutUser } from './services/supabaseClient';
 
 // All 10 navigation pages
 const NAV = [
@@ -164,6 +165,33 @@ function MobileDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
 
 export default function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [userProfile, setUserProfile] = useState<{ email?: string; name?: string; avatar?: string } | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      if (data.user) {
+        setUserProfile({
+          email: data.user.email,
+          name: data.user.user_metadata?.full_name || data.user.email?.split('@')[0],
+          avatar: data.user.user_metadata?.avatar_url,
+        });
+      }
+    });
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUserProfile({
+          email: session.user.email,
+          name: session.user.user_metadata?.full_name || session.user.email?.split('@')[0],
+          avatar: session.user.user_metadata?.avatar_url,
+        });
+      } else {
+        setUserProfile(null);
+      }
+    });
+
+    return () => authListener.subscription.unsubscribe();
+  }, []);
 
   return (
     <AuthGate>
@@ -203,6 +231,52 @@ export default function App() {
               <h1 style={{ margin: 0 }}>Artha Tech</h1>
               <NotificationBell />
             </div>
+
+            {/* User Profile Card */}
+            {userProfile && (
+              <div style={{
+                margin: '12px 0 16px',
+                padding: '10px 12px',
+                borderRadius: 12,
+                background: 'rgba(99, 102, 241, 0.1)',
+                border: '1px solid rgba(99, 102, 241, 0.25)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, overflow: 'hidden' }}>
+                  {userProfile.avatar ? (
+                    <img src={userProfile.avatar} alt="User Avatar" style={{ width: 28, height: 28, borderRadius: '50%' }} />
+                  ) : (
+                    <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 13, color: '#fff' }}>
+                      {userProfile.name?.[0]?.toUpperCase() || 'U'}
+                    </div>
+                  )}
+                  <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: '#fff' }}>{userProfile.name}</div>
+                    <div style={{ fontSize: 10, color: '#9ca3af', overflow: 'hidden', textOverflow: 'ellipsis' }}>{userProfile.email}</div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => signOutUser()}
+                  title="Sign Out"
+                  style={{
+                    background: 'rgba(239, 68, 68, 0.15)',
+                    border: '1px solid rgba(239, 68, 68, 0.3)',
+                    color: '#f87171',
+                    borderRadius: 6,
+                    padding: '4px 8px',
+                    fontSize: 11,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                  }}
+                >
+                  Out
+                </button>
+              </div>
+            )}
+
             <nav>
               {NAV.map(item => (
                 <NavLink
