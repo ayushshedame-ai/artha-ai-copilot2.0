@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, NavLink, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, useLocation, Navigate } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import AIChat from './pages/AIChat';
 import Portfolio from './pages/Portfolio';
@@ -304,6 +304,7 @@ export default function App() {
               <Route path="/system"      element={wrap(<SystemHealth />)} />
               <Route path="/sandbox"     element={wrap(<SandboxPage />)} />
               <Route path="/broker"      element={wrap(<BrokerSettings />)} />
+              <Route path="*"            element={<Navigate to="/" replace />} />
             </Routes>
           </main>
 

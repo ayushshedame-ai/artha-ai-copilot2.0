@@ -1,6 +1,96 @@
 {
   "notifications": [
     {
+      "id": 55,
+      "read": false,
+      "timestamp": "2026-08-15T07:45:01.160Z",
+      "component": "news_engine",
+      "severity": "INFO",
+      "title": "Health Status Changed",
+      "message": "news_engine changed from WARNING to HEALTHY"
+    },
+    {
+      "id": 54,
+      "read": false,
+      "timestamp": "2026-08-15T07:15:01.101Z",
+      "component": "news_engine",
+      "severity": "INFO",
+      "title": "Health Status Changed",
+      "message": "news_engine changed from DEGRADED to HEALTHY"
+    },
+    {
+      "id": 53,
+      "read": false,
+      "timestamp": "2026-08-15T02:52:20.886Z",
+      "component": "news_engine",
+      "severity": "WARNING",
+      "title": "Health Status Changed",
+      "message": "news_engine changed from WARNING to DEGRADED"
+    },
+    {
+      "id": 52,
+      "read": false,
+      "timestamp": "2026-08-15T02:10:07.508Z",
+      "component": "news_engine",
+      "severity": "WARNING",
+      "title": "Health Status Changed",
+      "message": "news_engine changed from HEALTHY to WARNING"
+    },
+    {
+      "id": 51,
+      "read": false,
+      "timestamp": "2026-08-15T01:40:07.397Z",
+      "component": "news_engine",
+      "severity": "WARNING",
+      "title": "Health Status Changed",
+      "message": "news_engine changed from HEALTHY to WARNING"
+    },
+    {
+      "id": 50,
+      "read": false,
+      "timestamp": "2026-08-15T01:10:07.290Z",
+      "component": "news_engine",
+      "severity": "WARNING",
+      "title": "Health Status Changed",
+      "message": "news_engine changed from HEALTHY to WARNING"
+    },
+    {
+      "id": 49,
+      "read": false,
+      "timestamp": "2026-08-15T00:32:07.143Z",
+      "component": "news_engine",
+      "severity": "WARNING",
+      "title": "Health Status Changed",
+      "message": "news_engine changed from HEALTHY to WARNING"
+    },
+    {
+      "id": 48,
+      "read": false,
+      "timestamp": "2026-08-14T23:46:11.023Z",
+      "component": "news_engine",
+      "severity": "WARNING",
+      "title": "Health Status Changed",
+      "message": "news_engine changed from WARNING to DEGRADED"
+    },
+    {
+      "id": 47,
+      "read": false,
+      "timestamp": "2026-08-14T23:15:10.871Z",
+      "component": "news_engine",
+      "severity": "INFO",
+      "title": "Health Status Changed",
+      "message": "news_engine changed from WARNING to HEALTHY"
+    },
+    {
+      "id": 46,
+      "read": false,
+      "timestamp": "2026-08-14T22:43:10.731Z",
+      "component": "news_engine",
+      "severity": "WARNING",
+      "title": "Health Status Changed",
+      "message": "news_engine changed from HEALTHY to WARNING"
+    },
+    {
       "id": 45,
       "read": false,
       "timestamp": "2026-08-04T20:43:53.880Z",
@@ -433,77 +523,3522 @@
   ],
   "health_history": [
     {
-      "id": 159,
+      "id": 169,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:43:43.916Z"
+      "recorded_at": "2026-08-14T22:33:10.783Z"
     },
     {
-      "id": 160,
+      "id": 170,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:44:13.913Z"
+      "recorded_at": "2026-08-14T22:33:40.776Z"
     },
     {
-      "id": 161,
+      "id": 171,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:44:43.925Z"
+      "recorded_at": "2026-08-14T22:34:10.777Z"
     },
     {
-      "id": 162,
+      "id": 172,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:45:13.934Z"
+      "recorded_at": "2026-08-14T22:34:40.720Z"
     },
     {
-      "id": 163,
+      "id": 173,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:45:43.941Z"
+      "recorded_at": "2026-08-14T22:35:10.720Z"
     },
     {
-      "id": 164,
+      "id": 174,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:46:13.948Z"
+      "recorded_at": "2026-08-14T22:35:40.720Z"
     },
     {
-      "id": 165,
+      "id": 175,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:46:43.948Z"
+      "recorded_at": "2026-08-14T22:36:10.722Z"
     },
     {
-      "id": 166,
+      "id": 176,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:47:13.957Z"
+      "recorded_at": "2026-08-14T22:36:40.723Z"
     },
     {
-      "id": 167,
+      "id": 177,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:47:43.966Z"
+      "recorded_at": "2026-08-14T22:37:10.723Z"
     },
     {
-      "id": 168,
+      "id": 178,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:48:13.971Z"
+      "recorded_at": "2026-08-14T22:37:40.725Z"
+    },
+    {
+      "id": 179,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:38:10.725Z"
+    },
+    {
+      "id": 180,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:38:40.726Z"
+    },
+    {
+      "id": 181,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:39:10.727Z"
+    },
+    {
+      "id": 182,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:39:40.728Z"
+    },
+    {
+      "id": 183,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:40:10.728Z"
+    },
+    {
+      "id": 184,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:40:40.728Z"
+    },
+    {
+      "id": 185,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:41:10.729Z"
+    },
+    {
+      "id": 186,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:41:40.729Z"
+    },
+    {
+      "id": 187,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:42:10.729Z"
+    },
+    {
+      "id": 188,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:42:40.730Z"
+    },
+    {
+      "id": 189,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:43:10.732Z"
+    },
+    {
+      "id": 190,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:43:40.730Z"
+    },
+    {
+      "id": 191,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:44:10.730Z"
+    },
+    {
+      "id": 192,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:44:40.730Z"
+    },
+    {
+      "id": 193,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:45:10.730Z"
+    },
+    {
+      "id": 194,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:45:40.731Z"
+    },
+    {
+      "id": 195,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:46:10.731Z"
+    },
+    {
+      "id": 196,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:46:40.731Z"
+    },
+    {
+      "id": 197,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:47:10.731Z"
+    },
+    {
+      "id": 198,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:47:40.731Z"
+    },
+    {
+      "id": 199,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:48:10.732Z"
+    },
+    {
+      "id": 200,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:48:40.732Z"
+    },
+    {
+      "id": 201,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:49:10.733Z"
+    },
+    {
+      "id": 202,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:49:40.734Z"
+    },
+    {
+      "id": 203,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:50:10.735Z"
+    },
+    {
+      "id": 204,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:50:40.748Z"
+    },
+    {
+      "id": 205,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:51:10.764Z"
+    },
+    {
+      "id": 206,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:51:40.767Z"
+    },
+    {
+      "id": 207,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:52:10.769Z"
+    },
+    {
+      "id": 208,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:52:40.769Z"
+    },
+    {
+      "id": 209,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:53:10.770Z"
+    },
+    {
+      "id": 210,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:53:40.772Z"
+    },
+    {
+      "id": 211,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:54:10.774Z"
+    },
+    {
+      "id": 212,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:54:40.775Z"
+    },
+    {
+      "id": 213,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:55:10.775Z"
+    },
+    {
+      "id": 214,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:55:40.775Z"
+    },
+    {
+      "id": 215,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:56:10.776Z"
+    },
+    {
+      "id": 216,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:56:40.776Z"
+    },
+    {
+      "id": 217,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:57:10.777Z"
+    },
+    {
+      "id": 218,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:57:40.779Z"
+    },
+    {
+      "id": 219,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:58:10.779Z"
+    },
+    {
+      "id": 220,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:58:40.781Z"
+    },
+    {
+      "id": 221,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:59:10.782Z"
+    },
+    {
+      "id": 222,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T22:59:40.783Z"
+    },
+    {
+      "id": 223,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:00:10.785Z"
+    },
+    {
+      "id": 224,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:00:40.785Z"
+    },
+    {
+      "id": 225,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:01:10.786Z"
+    },
+    {
+      "id": 226,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:01:40.787Z"
+    },
+    {
+      "id": 227,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:02:10.788Z"
+    },
+    {
+      "id": 228,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:02:40.789Z"
+    },
+    {
+      "id": 229,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:03:10.789Z"
+    },
+    {
+      "id": 230,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:03:40.790Z"
+    },
+    {
+      "id": 231,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:04:10.791Z"
+    },
+    {
+      "id": 232,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:04:40.791Z"
+    },
+    {
+      "id": 233,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:05:10.793Z"
+    },
+    {
+      "id": 234,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:05:40.794Z"
+    },
+    {
+      "id": 235,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:06:10.795Z"
+    },
+    {
+      "id": 236,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:06:40.852Z"
+    },
+    {
+      "id": 237,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:07:10.853Z"
+    },
+    {
+      "id": 238,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:07:40.854Z"
+    },
+    {
+      "id": 239,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:08:10.854Z"
+    },
+    {
+      "id": 240,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:08:40.855Z"
+    },
+    {
+      "id": 241,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:09:10.856Z"
+    },
+    {
+      "id": 242,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:09:40.857Z"
+    },
+    {
+      "id": 243,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:10:10.858Z"
+    },
+    {
+      "id": 244,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:10:40.859Z"
+    },
+    {
+      "id": 245,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:11:10.860Z"
+    },
+    {
+      "id": 246,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:11:40.861Z"
+    },
+    {
+      "id": 247,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:12:10.863Z"
+    },
+    {
+      "id": 248,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:12:40.865Z"
+    },
+    {
+      "id": 249,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:13:10.866Z"
+    },
+    {
+      "id": 250,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:13:40.867Z"
+    },
+    {
+      "id": 251,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:14:10.870Z"
+    },
+    {
+      "id": 252,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:14:40.870Z"
+    },
+    {
+      "id": 253,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:15:10.871Z"
+    },
+    {
+      "id": 254,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:15:40.872Z"
+    },
+    {
+      "id": 255,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:16:10.873Z"
+    },
+    {
+      "id": 256,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:16:40.874Z"
+    },
+    {
+      "id": 257,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:17:10.876Z"
+    },
+    {
+      "id": 258,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:17:40.879Z"
+    },
+    {
+      "id": 259,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:18:10.882Z"
+    },
+    {
+      "id": 260,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:18:40.884Z"
+    },
+    {
+      "id": 261,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:19:10.886Z"
+    },
+    {
+      "id": 262,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:19:40.889Z"
+    },
+    {
+      "id": 263,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:20:10.890Z"
+    },
+    {
+      "id": 264,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:20:40.891Z"
+    },
+    {
+      "id": 265,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:21:10.893Z"
+    },
+    {
+      "id": 266,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:21:40.895Z"
+    },
+    {
+      "id": 267,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:22:10.897Z"
+    },
+    {
+      "id": 268,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:26:08.053Z"
+    },
+    {
+      "id": 269,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:26:38.069Z"
+    },
+    {
+      "id": 270,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:31:08.147Z"
+    },
+    {
+      "id": 271,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:31:38.151Z"
+    },
+    {
+      "id": 272,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:36:09.005Z"
+    },
+    {
+      "id": 273,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:36:39.007Z"
+    },
+    {
+      "id": 274,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:41:10.071Z"
+    },
+    {
+      "id": 275,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:41:40.081Z"
+    },
+    {
+      "id": 276,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:46:11.023Z"
+    },
+    {
+      "id": 277,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:46:41.026Z"
+    },
+    {
+      "id": 278,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:51:12.131Z"
+    },
+    {
+      "id": 279,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:51:42.134Z"
+    },
+    {
+      "id": 280,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:56:13.032Z"
+    },
+    {
+      "id": 281,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-14T23:56:43.032Z"
+    },
+    {
+      "id": 282,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:01:14.077Z"
+    },
+    {
+      "id": 283,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:01:44.079Z"
+    },
+    {
+      "id": 284,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:02:14.081Z"
+    },
+    {
+      "id": 285,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:02:44.083Z"
+    },
+    {
+      "id": 286,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:03:14.086Z"
+    },
+    {
+      "id": 287,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:03:44.088Z"
+    },
+    {
+      "id": 288,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:04:14.091Z"
+    },
+    {
+      "id": 289,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:04:44.093Z"
+    },
+    {
+      "id": 290,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:05:14.094Z"
+    },
+    {
+      "id": 291,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:05:44.095Z"
+    },
+    {
+      "id": 292,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:06:14.095Z"
+    },
+    {
+      "id": 293,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:06:44.099Z"
+    },
+    {
+      "id": 294,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:07:14.100Z"
+    },
+    {
+      "id": 295,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:07:44.102Z"
+    },
+    {
+      "id": 296,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:08:14.104Z"
+    },
+    {
+      "id": 297,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:08:44.104Z"
+    },
+    {
+      "id": 298,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:09:14.107Z"
+    },
+    {
+      "id": 299,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:09:44.108Z"
+    },
+    {
+      "id": 300,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:10:14.110Z"
+    },
+    {
+      "id": 301,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:10:44.112Z"
+    },
+    {
+      "id": 302,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:11:14.114Z"
+    },
+    {
+      "id": 303,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:11:44.116Z"
+    },
+    {
+      "id": 304,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:12:14.120Z"
+    },
+    {
+      "id": 305,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:12:44.121Z"
+    },
+    {
+      "id": 306,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:13:14.123Z"
+    },
+    {
+      "id": 307,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:13:44.126Z"
+    },
+    {
+      "id": 308,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:14:14.129Z"
+    },
+    {
+      "id": 309,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:14:44.131Z"
+    },
+    {
+      "id": 310,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:15:14.134Z"
+    },
+    {
+      "id": 311,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:15:44.137Z"
+    },
+    {
+      "id": 312,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:16:14.139Z"
+    },
+    {
+      "id": 313,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:16:44.141Z"
+    },
+    {
+      "id": 314,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:17:14.144Z"
+    },
+    {
+      "id": 315,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:32:07.210Z"
+    },
+    {
+      "id": 316,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:32:37.141Z"
+    },
+    {
+      "id": 317,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:33:07.143Z"
+    },
+    {
+      "id": 318,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:33:37.145Z"
+    },
+    {
+      "id": 319,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:34:07.148Z"
+    },
+    {
+      "id": 320,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:34:37.150Z"
+    },
+    {
+      "id": 321,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:35:07.152Z"
+    },
+    {
+      "id": 322,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:35:37.154Z"
+    },
+    {
+      "id": 323,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:36:07.155Z"
+    },
+    {
+      "id": 324,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:36:37.158Z"
+    },
+    {
+      "id": 325,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:37:07.159Z"
+    },
+    {
+      "id": 326,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:37:37.162Z"
+    },
+    {
+      "id": 327,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:38:07.162Z"
+    },
+    {
+      "id": 328,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:38:37.163Z"
+    },
+    {
+      "id": 329,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:39:07.166Z"
+    },
+    {
+      "id": 330,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:39:37.167Z"
+    },
+    {
+      "id": 331,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:40:07.170Z"
+    },
+    {
+      "id": 332,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:40:37.172Z"
+    },
+    {
+      "id": 333,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:41:07.175Z"
+    },
+    {
+      "id": 334,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:41:37.177Z"
+    },
+    {
+      "id": 335,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:42:07.179Z"
+    },
+    {
+      "id": 336,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:42:37.182Z"
+    },
+    {
+      "id": 337,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:43:07.184Z"
+    },
+    {
+      "id": 338,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:43:37.186Z"
+    },
+    {
+      "id": 339,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:44:07.188Z"
+    },
+    {
+      "id": 340,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:44:37.191Z"
+    },
+    {
+      "id": 341,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:45:07.193Z"
+    },
+    {
+      "id": 342,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:45:37.196Z"
+    },
+    {
+      "id": 343,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:46:07.198Z"
+    },
+    {
+      "id": 344,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:46:37.200Z"
+    },
+    {
+      "id": 345,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:47:07.203Z"
+    },
+    {
+      "id": 346,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:47:37.205Z"
+    },
+    {
+      "id": 347,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:48:07.207Z"
+    },
+    {
+      "id": 348,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:48:37.207Z"
+    },
+    {
+      "id": 349,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:49:07.208Z"
+    },
+    {
+      "id": 350,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:49:37.209Z"
+    },
+    {
+      "id": 351,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:50:07.211Z"
+    },
+    {
+      "id": 352,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:50:37.213Z"
+    },
+    {
+      "id": 353,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:51:07.215Z"
+    },
+    {
+      "id": 354,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:51:37.216Z"
+    },
+    {
+      "id": 355,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:52:07.219Z"
+    },
+    {
+      "id": 356,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:52:37.221Z"
+    },
+    {
+      "id": 357,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:53:07.224Z"
+    },
+    {
+      "id": 358,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:53:37.225Z"
+    },
+    {
+      "id": 359,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:54:07.227Z"
+    },
+    {
+      "id": 360,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:54:37.230Z"
+    },
+    {
+      "id": 361,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:55:07.232Z"
+    },
+    {
+      "id": 362,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:55:37.234Z"
+    },
+    {
+      "id": 363,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:56:07.236Z"
+    },
+    {
+      "id": 364,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:56:37.238Z"
+    },
+    {
+      "id": 365,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:57:07.241Z"
+    },
+    {
+      "id": 366,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:57:37.244Z"
+    },
+    {
+      "id": 367,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:58:07.245Z"
+    },
+    {
+      "id": 368,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:58:37.247Z"
+    },
+    {
+      "id": 369,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:59:07.250Z"
+    },
+    {
+      "id": 370,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T00:59:37.252Z"
+    },
+    {
+      "id": 371,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:00:07.255Z"
+    },
+    {
+      "id": 372,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:00:37.257Z"
+    },
+    {
+      "id": 373,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:01:07.259Z"
+    },
+    {
+      "id": 374,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:01:37.262Z"
+    },
+    {
+      "id": 375,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:02:07.263Z"
+    },
+    {
+      "id": 376,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:02:37.266Z"
+    },
+    {
+      "id": 377,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:03:07.268Z"
+    },
+    {
+      "id": 378,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:03:37.270Z"
+    },
+    {
+      "id": 379,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:04:07.268Z"
+    },
+    {
+      "id": 380,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:04:37.269Z"
+    },
+    {
+      "id": 381,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:05:07.272Z"
+    },
+    {
+      "id": 382,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:05:37.273Z"
+    },
+    {
+      "id": 383,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:06:07.276Z"
+    },
+    {
+      "id": 384,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:06:37.279Z"
+    },
+    {
+      "id": 385,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:07:07.282Z"
+    },
+    {
+      "id": 386,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:07:37.283Z"
+    },
+    {
+      "id": 387,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:08:07.283Z"
+    },
+    {
+      "id": 388,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:08:37.284Z"
+    },
+    {
+      "id": 389,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:09:07.285Z"
+    },
+    {
+      "id": 390,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:09:37.288Z"
+    },
+    {
+      "id": 391,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:10:07.291Z"
+    },
+    {
+      "id": 392,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:10:37.292Z"
+    },
+    {
+      "id": 393,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:11:07.295Z"
+    },
+    {
+      "id": 394,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:11:37.297Z"
+    },
+    {
+      "id": 395,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:12:07.299Z"
+    },
+    {
+      "id": 396,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:12:37.302Z"
+    },
+    {
+      "id": 397,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:13:07.302Z"
+    },
+    {
+      "id": 398,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:13:37.304Z"
+    },
+    {
+      "id": 399,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:14:07.306Z"
+    },
+    {
+      "id": 400,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:14:37.307Z"
+    },
+    {
+      "id": 401,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:15:07.310Z"
+    },
+    {
+      "id": 402,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:15:37.312Z"
+    },
+    {
+      "id": 403,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:16:07.314Z"
+    },
+    {
+      "id": 404,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:16:37.315Z"
+    },
+    {
+      "id": 405,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:17:07.317Z"
+    },
+    {
+      "id": 406,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:17:37.320Z"
+    },
+    {
+      "id": 407,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:18:07.322Z"
+    },
+    {
+      "id": 408,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:18:37.324Z"
+    },
+    {
+      "id": 409,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:19:07.327Z"
+    },
+    {
+      "id": 410,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:19:37.329Z"
+    },
+    {
+      "id": 411,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:20:07.327Z"
+    },
+    {
+      "id": 412,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:20:37.327Z"
+    },
+    {
+      "id": 413,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:21:07.329Z"
+    },
+    {
+      "id": 414,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:21:37.331Z"
+    },
+    {
+      "id": 415,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:22:07.332Z"
+    },
+    {
+      "id": 416,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:22:37.332Z"
+    },
+    {
+      "id": 417,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:23:07.334Z"
+    },
+    {
+      "id": 418,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:23:37.337Z"
+    },
+    {
+      "id": 419,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:24:07.339Z"
+    },
+    {
+      "id": 420,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:24:37.341Z"
+    },
+    {
+      "id": 421,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:25:07.344Z"
+    },
+    {
+      "id": 422,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:25:37.347Z"
+    },
+    {
+      "id": 423,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:26:07.349Z"
+    },
+    {
+      "id": 424,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:26:37.351Z"
+    },
+    {
+      "id": 425,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:27:07.352Z"
+    },
+    {
+      "id": 426,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:27:37.355Z"
+    },
+    {
+      "id": 427,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:28:07.357Z"
+    },
+    {
+      "id": 428,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:28:37.357Z"
+    },
+    {
+      "id": 429,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:29:07.360Z"
+    },
+    {
+      "id": 430,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:29:37.362Z"
+    },
+    {
+      "id": 431,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:30:07.364Z"
+    },
+    {
+      "id": 432,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:30:37.366Z"
+    },
+    {
+      "id": 433,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:31:07.368Z"
+    },
+    {
+      "id": 434,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:31:37.370Z"
+    },
+    {
+      "id": 435,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:32:07.372Z"
+    },
+    {
+      "id": 436,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:32:37.372Z"
+    },
+    {
+      "id": 437,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:33:07.374Z"
+    },
+    {
+      "id": 438,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:33:37.377Z"
+    },
+    {
+      "id": 439,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:34:07.379Z"
+    },
+    {
+      "id": 440,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:34:37.381Z"
+    },
+    {
+      "id": 441,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:35:07.383Z"
+    },
+    {
+      "id": 442,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:35:37.386Z"
+    },
+    {
+      "id": 443,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:36:07.381Z"
+    },
+    {
+      "id": 444,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:36:37.381Z"
+    },
+    {
+      "id": 445,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:37:07.383Z"
+    },
+    {
+      "id": 446,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:37:37.385Z"
+    },
+    {
+      "id": 447,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:38:07.387Z"
+    },
+    {
+      "id": 448,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:38:37.389Z"
+    },
+    {
+      "id": 449,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:39:07.392Z"
+    },
+    {
+      "id": 450,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:39:37.395Z"
+    },
+    {
+      "id": 451,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:40:07.397Z"
+    },
+    {
+      "id": 452,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:40:37.399Z"
+    },
+    {
+      "id": 453,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:41:07.401Z"
+    },
+    {
+      "id": 454,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:41:37.402Z"
+    },
+    {
+      "id": 455,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:42:07.403Z"
+    },
+    {
+      "id": 456,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:42:37.406Z"
+    },
+    {
+      "id": 457,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:43:07.408Z"
+    },
+    {
+      "id": 458,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:43:37.410Z"
+    },
+    {
+      "id": 459,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:44:07.413Z"
+    },
+    {
+      "id": 460,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:44:37.414Z"
+    },
+    {
+      "id": 461,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:45:07.417Z"
+    },
+    {
+      "id": 462,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:45:37.418Z"
+    },
+    {
+      "id": 463,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:46:07.421Z"
+    },
+    {
+      "id": 464,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:46:37.421Z"
+    },
+    {
+      "id": 465,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:47:07.422Z"
+    },
+    {
+      "id": 466,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:47:37.424Z"
+    },
+    {
+      "id": 467,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:48:07.427Z"
+    },
+    {
+      "id": 468,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:48:37.429Z"
+    },
+    {
+      "id": 469,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:49:07.432Z"
+    },
+    {
+      "id": 470,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:49:37.434Z"
+    },
+    {
+      "id": 471,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:50:07.435Z"
+    },
+    {
+      "id": 472,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:50:37.437Z"
+    },
+    {
+      "id": 473,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:51:07.434Z"
+    },
+    {
+      "id": 474,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:51:37.436Z"
+    },
+    {
+      "id": 475,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:52:07.436Z"
+    },
+    {
+      "id": 476,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:52:37.439Z"
+    },
+    {
+      "id": 477,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:53:07.438Z"
+    },
+    {
+      "id": 478,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:53:37.441Z"
+    },
+    {
+      "id": 479,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:54:07.443Z"
+    },
+    {
+      "id": 480,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:54:37.445Z"
+    },
+    {
+      "id": 481,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:55:07.447Z"
+    },
+    {
+      "id": 482,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:55:37.450Z"
+    },
+    {
+      "id": 483,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:56:07.452Z"
+    },
+    {
+      "id": 484,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:56:37.455Z"
+    },
+    {
+      "id": 485,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:57:07.458Z"
+    },
+    {
+      "id": 486,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:57:37.461Z"
+    },
+    {
+      "id": 487,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:58:07.463Z"
+    },
+    {
+      "id": 488,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:58:37.465Z"
+    },
+    {
+      "id": 489,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:59:07.467Z"
+    },
+    {
+      "id": 490,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T01:59:37.470Z"
+    },
+    {
+      "id": 491,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:00:07.472Z"
+    },
+    {
+      "id": 492,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:00:37.475Z"
+    },
+    {
+      "id": 493,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:01:07.477Z"
+    },
+    {
+      "id": 494,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:01:37.479Z"
+    },
+    {
+      "id": 495,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:02:07.481Z"
+    },
+    {
+      "id": 496,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:02:37.483Z"
+    },
+    {
+      "id": 497,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:03:07.485Z"
+    },
+    {
+      "id": 498,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:03:37.488Z"
+    },
+    {
+      "id": 499,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:04:07.490Z"
+    },
+    {
+      "id": 500,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:04:37.492Z"
+    },
+    {
+      "id": 501,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:05:07.494Z"
+    },
+    {
+      "id": 502,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:05:37.495Z"
+    },
+    {
+      "id": 503,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:06:07.496Z"
+    },
+    {
+      "id": 504,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:06:37.499Z"
+    },
+    {
+      "id": 505,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:07:07.498Z"
+    },
+    {
+      "id": 506,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:07:37.498Z"
+    },
+    {
+      "id": 507,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:08:07.500Z"
+    },
+    {
+      "id": 508,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:08:37.503Z"
+    },
+    {
+      "id": 509,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:09:07.504Z"
+    },
+    {
+      "id": 510,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:09:37.506Z"
+    },
+    {
+      "id": 511,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:10:07.509Z"
+    },
+    {
+      "id": 512,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:10:37.511Z"
+    },
+    {
+      "id": 513,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:11:07.513Z"
+    },
+    {
+      "id": 514,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:11:37.514Z"
+    },
+    {
+      "id": 515,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:12:07.516Z"
+    },
+    {
+      "id": 516,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:12:37.518Z"
+    },
+    {
+      "id": 517,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:13:07.520Z"
+    },
+    {
+      "id": 518,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:13:37.522Z"
+    },
+    {
+      "id": 519,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:14:07.524Z"
+    },
+    {
+      "id": 520,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:14:37.525Z"
+    },
+    {
+      "id": 521,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:15:07.528Z"
+    },
+    {
+      "id": 522,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:31:30.065Z"
+    },
+    {
+      "id": 523,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:33:41.791Z"
+    },
+    {
+      "id": 524,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:34:11.785Z"
+    },
+    {
+      "id": 525,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T02:52:20.886Z"
+    },
+    {
+      "id": 526,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T03:08:45.563Z"
+    },
+    {
+      "id": 527,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T03:15:41.939Z"
+    },
+    {
+      "id": 528,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T03:16:11.937Z"
+    },
+    {
+      "id": 529,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T03:34:02.323Z"
+    },
+    {
+      "id": 530,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T03:51:52.393Z"
+    },
+    {
+      "id": 531,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T03:55:00.576Z"
+    },
+    {
+      "id": 532,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T03:55:30.578Z"
+    },
+    {
+      "id": 533,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T04:10:57.320Z"
+    },
+    {
+      "id": 534,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T04:26:18.130Z"
+    },
+    {
+      "id": 535,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T04:35:02.943Z"
+    },
+    {
+      "id": 536,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T04:35:32.945Z"
+    },
+    {
+      "id": 537,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T04:51:58.123Z"
+    },
+    {
+      "id": 538,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T05:09:16.933Z"
+    },
+    {
+      "id": 539,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T05:27:11.712Z"
+    },
+    {
+      "id": 540,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T05:30:46.360Z"
+    },
+    {
+      "id": 541,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T05:31:16.360Z"
+    },
+    {
+      "id": 542,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T05:36:03.478Z"
+    },
+    {
+      "id": 543,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T05:36:33.469Z"
+    },
+    {
+      "id": 544,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T05:53:26.127Z"
+    },
+    {
+      "id": 545,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T06:09:46.030Z"
+    },
+    {
+      "id": 546,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T06:13:06.585Z"
+    },
+    {
+      "id": 547,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T06:13:36.587Z"
+    },
+    {
+      "id": 548,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T06:30:19.024Z"
+    },
+    {
+      "id": 549,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T06:37:04.367Z"
+    },
+    {
+      "id": 550,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T06:37:34.369Z"
+    },
+    {
+      "id": 551,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T06:54:53.456Z"
+    },
+    {
+      "id": 552,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:10:17.531Z"
+    },
+    {
+      "id": 553,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:10:47.536Z"
+    },
+    {
+      "id": 554,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:12:31.094Z"
+    },
+    {
+      "id": 555,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:13:01.095Z"
+    },
+    {
+      "id": 556,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:13:31.097Z"
+    },
+    {
+      "id": 557,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:14:01.098Z"
+    },
+    {
+      "id": 558,
+      "service": "overall",
+      "score": 73,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:14:31.099Z"
+    },
+    {
+      "id": 559,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:15:01.103Z"
+    },
+    {
+      "id": 560,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:15:31.101Z"
+    },
+    {
+      "id": 561,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:16:01.103Z"
+    },
+    {
+      "id": 562,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:16:31.103Z"
+    },
+    {
+      "id": 563,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:17:01.107Z"
+    },
+    {
+      "id": 564,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:17:31.108Z"
+    },
+    {
+      "id": 565,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:18:01.109Z"
+    },
+    {
+      "id": 566,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:18:31.110Z"
+    },
+    {
+      "id": 567,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:19:01.111Z"
+    },
+    {
+      "id": 568,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:19:31.112Z"
+    },
+    {
+      "id": 569,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:20:01.113Z"
+    },
+    {
+      "id": 570,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:20:31.114Z"
+    },
+    {
+      "id": 571,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:21:01.115Z"
+    },
+    {
+      "id": 572,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:21:31.116Z"
+    },
+    {
+      "id": 573,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:22:01.117Z"
+    },
+    {
+      "id": 574,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:22:31.118Z"
+    },
+    {
+      "id": 575,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:23:01.118Z"
+    },
+    {
+      "id": 576,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:23:31.118Z"
+    },
+    {
+      "id": 577,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:24:01.119Z"
+    },
+    {
+      "id": 578,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:24:31.121Z"
+    },
+    {
+      "id": 579,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:25:01.122Z"
+    },
+    {
+      "id": 580,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:25:31.123Z"
+    },
+    {
+      "id": 581,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:26:01.124Z"
+    },
+    {
+      "id": 582,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:26:31.124Z"
+    },
+    {
+      "id": 583,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:27:01.126Z"
+    },
+    {
+      "id": 584,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:27:31.128Z"
+    },
+    {
+      "id": 585,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:28:01.128Z"
+    },
+    {
+      "id": 586,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:28:31.128Z"
+    },
+    {
+      "id": 587,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:29:01.129Z"
+    },
+    {
+      "id": 588,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:29:31.129Z"
+    },
+    {
+      "id": 589,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:30:01.131Z"
+    },
+    {
+      "id": 590,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:30:31.131Z"
+    },
+    {
+      "id": 591,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:31:01.132Z"
+    },
+    {
+      "id": 592,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:31:31.133Z"
+    },
+    {
+      "id": 593,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:32:01.135Z"
+    },
+    {
+      "id": 594,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:32:31.136Z"
+    },
+    {
+      "id": 595,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:33:01.139Z"
+    },
+    {
+      "id": 596,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:33:31.140Z"
+    },
+    {
+      "id": 597,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:34:01.141Z"
+    },
+    {
+      "id": 598,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:34:31.141Z"
+    },
+    {
+      "id": 599,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:35:01.142Z"
+    },
+    {
+      "id": 600,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:35:31.142Z"
+    },
+    {
+      "id": 601,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:36:01.144Z"
+    },
+    {
+      "id": 602,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:36:31.146Z"
+    },
+    {
+      "id": 603,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:37:01.148Z"
+    },
+    {
+      "id": 604,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:37:31.148Z"
+    },
+    {
+      "id": 605,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:38:01.149Z"
+    },
+    {
+      "id": 606,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:38:31.150Z"
+    },
+    {
+      "id": 607,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:39:01.151Z"
+    },
+    {
+      "id": 608,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:39:31.153Z"
+    },
+    {
+      "id": 609,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:40:01.153Z"
+    },
+    {
+      "id": 610,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:40:31.153Z"
+    },
+    {
+      "id": 611,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:41:01.153Z"
+    },
+    {
+      "id": 612,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:41:31.154Z"
+    },
+    {
+      "id": 613,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:42:01.156Z"
+    },
+    {
+      "id": 614,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:42:31.156Z"
+    },
+    {
+      "id": 615,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:43:01.157Z"
+    },
+    {
+      "id": 616,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:43:31.159Z"
+    },
+    {
+      "id": 617,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:44:01.160Z"
+    },
+    {
+      "id": 618,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:44:31.160Z"
+    },
+    {
+      "id": 619,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:45:01.163Z"
+    },
+    {
+      "id": 620,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:45:31.161Z"
+    },
+    {
+      "id": 621,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:46:01.162Z"
+    },
+    {
+      "id": 622,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:46:31.163Z"
+    },
+    {
+      "id": 623,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:47:01.163Z"
+    },
+    {
+      "id": 624,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:47:31.164Z"
+    },
+    {
+      "id": 625,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:48:01.165Z"
+    },
+    {
+      "id": 626,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:48:31.166Z"
+    },
+    {
+      "id": 627,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:49:01.168Z"
+    },
+    {
+      "id": 628,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:49:31.170Z"
+    },
+    {
+      "id": 629,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:50:01.170Z"
+    },
+    {
+      "id": 630,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:50:31.172Z"
+    },
+    {
+      "id": 631,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:51:01.172Z"
+    },
+    {
+      "id": 632,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:51:31.173Z"
+    },
+    {
+      "id": 633,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:52:01.174Z"
+    },
+    {
+      "id": 634,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:52:31.175Z"
+    },
+    {
+      "id": 635,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:53:01.176Z"
+    },
+    {
+      "id": 636,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:53:31.177Z"
+    },
+    {
+      "id": 637,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:54:01.179Z"
+    },
+    {
+      "id": 638,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:54:31.179Z"
+    },
+    {
+      "id": 639,
+      "service": "overall",
+      "score": 77,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T07:55:01.181Z"
     }
   ],
-  "system_timeline": [],
+  "system_timeline": [
+    {
+      "id": 55,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-15T07:55:01.181Z"
+    },
+    {
+      "id": 54,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-15T07:45:01.163Z"
+    },
+    {
+      "id": 53,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-15T07:40:01.153Z"
+    },
+    {
+      "id": 52,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-15T07:30:01.130Z"
+    },
+    {
+      "id": 51,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-15T07:25:01.122Z"
+    },
+    {
+      "id": 50,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-15T07:15:01.103Z"
+    },
+    {
+      "id": 49,
+      "component": "news_engine",
+      "event": "Status changed to DEGRADED",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-15T02:52:20.886Z"
+    },
+    {
+      "id": 48,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-15T02:31:30.065Z"
+    },
+    {
+      "id": 47,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-15T02:15:07.527Z"
+    },
+    {
+      "id": 46,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-15T02:10:07.509Z"
+    },
+    {
+      "id": 45,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-15T02:00:07.472Z"
+    },
+    {
+      "id": 44,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-15T01:55:07.447Z"
+    },
+    {
+      "id": 43,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-15T01:45:07.417Z"
+    },
+    {
+      "id": 42,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-15T01:40:07.397Z"
+    },
+    {
+      "id": 41,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-15T01:30:07.364Z"
+    },
+    {
+      "id": 40,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-15T01:25:07.344Z"
+    },
+    {
+      "id": 39,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-15T01:15:07.310Z"
+    },
+    {
+      "id": 38,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-15T01:10:07.291Z"
+    },
+    {
+      "id": 37,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-15T01:00:07.255Z"
+    },
+    {
+      "id": 36,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-15T00:55:07.232Z"
+    },
+    {
+      "id": 35,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-15T00:45:07.193Z"
+    },
+    {
+      "id": 34,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-15T00:32:07.210Z"
+    },
+    {
+      "id": 33,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-15T00:15:14.134Z"
+    },
+    {
+      "id": 32,
+      "component": "news_engine",
+      "event": "Status changed to DEGRADED",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-14T23:46:11.023Z"
+    },
+    {
+      "id": 31,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-14T23:26:08.053Z"
+    },
+    {
+      "id": 30,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-14T23:15:10.871Z"
+    },
+    {
+      "id": 29,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-14T23:10:10.858Z"
+    },
+    {
+      "id": 28,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-14T23:00:10.784Z"
+    },
+    {
+      "id": 27,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-14T22:55:10.775Z"
+    },
+    {
+      "id": 26,
+      "component": "news_engine",
+      "event": "Status changed to HEALTHY",
+      "severity": "INFO",
+      "recorded_at": "2026-08-14T22:45:10.730Z"
+    },
+    {
+      "id": 25,
+      "component": "news_engine",
+      "event": "Status changed to WARNING",
+      "severity": "WARNING",
+      "recorded_at": "2026-08-14T22:43:10.732Z"
+    }
+  ],
   "recovery_events": [
     {
       "id": 9,
@@ -580,9 +4115,9 @@
   ],
   "trade_journal": [],
   "_counters": {
-    "health_history": 168,
-    "notifications": 45,
-    "system_timeline": 24,
+    "health_history": 639,
+    "notifications": 55,
+    "system_timeline": 55,
     "recovery_events": 9,
     "push_subscriptions": 1,
     "price_alerts": 1

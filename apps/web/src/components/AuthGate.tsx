@@ -1,11 +1,11 @@
 /**
- * AuthGate.tsx  — Supabase Auth Integration
+ * AuthGate.tsx  — Robust Supabase Auth Integration
  *
- * Checks for an active Supabase user session (Google OAuth / Email).
- * Renders SupabaseAuthModal when unauthenticated.
+ * Prevents OAuth callback flickers, handles URL token hash parsing,
+ * and seamlessly transitions after Google OAuth sign-in.
  */
 import React, { useState, useEffect } from 'react';
-import { supabase, getSession } from '../services/supabaseClient';
+import { supabase } from '../services/supabaseClient';
 import SupabaseAuthModal from './SupabaseAuthModal';
 
 const OVERLAY: React.CSSProperties = {
@@ -22,28 +22,50 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    // 1. Initial session check
-    getSession().then((session) => {
+    let mounted = true;
+
+    // Check if returning from OAuth redirect (has hash or query code/access_token)
+    const hasAuthParams =
+      window.location.hash.includes('access_token=') ||
+      window.location.hash.includes('error=') ||
+      window.location.search.includes('code=');
+
+    // Subscribe to auth state changes FIRST (handles hash/PKCE parsing automatically)
+    const { data: authSubscription } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!mounted) return;
+
       if (session?.user) {
         setAuthenticated(true);
-      } else {
+        // Clean URL hash/query after successful OAuth callback
+        if (hasAuthParams) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+      } else if (event === 'SIGNED_OUT' || (!hasAuthParams && event === 'INITIAL_SESSION')) {
         setAuthenticated(false);
       }
+
       setLoading(false);
     });
 
-    // 2. Listen for auth changes (Google OAuth callback, sign in, sign out)
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        setAuthenticated(true);
-      } else {
-        setAuthenticated(false);
+    // Fallback safety timeout if Supabase takes too long
+    const timeoutId = setTimeout(() => {
+      if (mounted && loading) {
+        supabase.auth.getSession().then(({ data }) => {
+          if (!mounted) return;
+          if (data.session?.user) {
+            setAuthenticated(true);
+          } else {
+            setAuthenticated(false);
+          }
+          setLoading(false);
+        });
       }
-      setLoading(false);
-    });
+    }, hasAuthParams ? 2500 : 800);
 
     return () => {
-      authListener.subscription.unsubscribe();
+      mounted = false;
+      clearTimeout(timeoutId);
+      authSubscription.subscription.unsubscribe();
     };
   }, []);
 
@@ -51,9 +73,12 @@ export function AuthGate({ children }: { children: React.ReactNode }) {
     return (
       <div style={OVERLAY}>
         <div style={{ textAlign: 'center', color: '#fff' }}>
-          <div style={{ fontSize: 42, marginBottom: 12 }}>⚡</div>
-          <div style={{ fontSize: 16, fontWeight: 600, color: '#a78bfa' }}>
-            Authenticating with Artha Tech...
+          <div style={{ fontSize: 48, marginBottom: 16, animation: 'pulse 1.5s infinite' }}>⚡</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: '#a78bfa', letterSpacing: '-0.3px' }}>
+            Signing in to Artha Tech...
+          </div>
+          <div style={{ fontSize: 13, color: '#9ca3af', marginTop: 6 }}>
+            Verifying your secure credentials
           </div>
         </div>
       </div>
