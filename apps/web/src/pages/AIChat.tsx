@@ -23,7 +23,7 @@ export default function AIChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      text: "Hello! I'm Artha AI Copilot — your autonomous portfolio agent.\n\nI use real tools to answer you:\n📈 Live prices · 📊 Fundamentals (P/E, EPS, ROE) · 📰 Live news · 🌐 Market overview\n\nAsk me anything about a stock or your portfolio!",
+      text: "Hello! I'm Artha Tech Copilot — your autonomous portfolio agent.\n\nI use real tools to answer you:\n📈 Live prices · 📊 Fundamentals (P/E, EPS, ROE) · 📰 Live news · 🌐 Market overview\n\nAsk me anything about a stock or your portfolio!",
       timestamp: new Date(),
     }
   ]);
@@ -87,7 +87,7 @@ export default function AIChat() {
                 <div key={i} style={{ display: 'flex', justifyContent: isUser ? 'flex-end' : 'flex-start' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 4, maxWidth: isUser ? '85%' : '92%' }}>
                     <div style={{ fontSize: 11, color: 'var(--muted)', alignSelf: isUser ? 'flex-end' : 'flex-start', padding: '0 4px' }}>
-                      {isUser ? '👤 You' : '🤖 Artha AI'} · {m.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      {isUser ? '👤 You' : '🤖 Artha Tech'} · {m.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
 
                     {/* Tool Log — shown above assistant messages */}
