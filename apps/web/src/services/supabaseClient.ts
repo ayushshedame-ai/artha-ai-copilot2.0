@@ -19,6 +19,15 @@ export interface UserPortfolio {
   updated_at?: string;
 }
 
+export interface UserBrokerCredentials {
+  user_id: string;
+  broker_name: 'ANGELONE' | 'ZERODHA' | 'UPSTOX' | 'DHAN' | 'FYERS' | 'PAPER';
+  credentials_json: Record<string, string>;
+  trading_mode: 'PAPER' | 'LIVE';
+  is_active?: boolean;
+  updated_at?: string;
+}
+
 // ── Auth Helpers ──────────────────────────────────────────────────────────────
 export async function signInWithGoogle() {
   const { data, error } = await supabase.auth.signInWithOAuth({
@@ -94,6 +103,45 @@ export async function saveUserPortfolio(portfolio: UserPortfolio): Promise<boole
     return true;
   } catch (err) {
     console.error('[Supabase] Exception saving portfolio:', err);
+    return false;
+  }
+}
+
+// ── Broker Credentials Storage Helpers ─────────────────────────────────────────
+export async function fetchUserBrokerCredentials(userId: string): Promise<UserBrokerCredentials | null> {
+  try {
+    const { data, error } = await supabase
+      .from('broker_credentials')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+
+    if (error && error.code !== 'PGRST116') {
+      console.warn('[Supabase] Error fetching broker credentials:', error.message);
+    }
+    return data || null;
+  } catch (err) {
+    console.error('[Supabase] Exception fetching broker credentials:', err);
+    return null;
+  }
+}
+
+export async function saveUserBrokerCredentials(credentials: UserBrokerCredentials): Promise<boolean> {
+  try {
+    const { error } = await supabase
+      .from('broker_credentials')
+      .upsert({
+        ...credentials,
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'user_id' });
+
+    if (error) {
+      console.error('[Supabase] Save broker credentials failed:', error.message);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error('[Supabase] Exception saving broker credentials:', err);
     return false;
   }
 }

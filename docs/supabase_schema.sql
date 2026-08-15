@@ -32,10 +32,22 @@ CREATE TABLE IF NOT EXISTS public.watchlists (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
+-- 4. Broker Credentials Table (Per-user saved API keys for Angel One, Zerodha, Upstox, Dhan, Fyers)
+CREATE TABLE IF NOT EXISTS public.broker_credentials (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL UNIQUE,
+  broker_name TEXT NOT NULL DEFAULT 'ANGELONE',
+  credentials_json JSONB DEFAULT '{}'::jsonb NOT NULL,
+  trading_mode TEXT NOT NULL DEFAULT 'PAPER',
+  is_active BOOLEAN DEFAULT true,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
 -- Enable Row Level Security (RLS) on all tables
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.portfolios ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.watchlists ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.broker_credentials ENABLE ROW LEVEL SECURITY;
 
 -- Create RLS Policies ensuring strict per-user data isolation
 DROP POLICY IF EXISTS "Users can read and write own profile" ON public.profiles;
@@ -48,6 +60,10 @@ CREATE POLICY "Users can read and write own portfolio" ON public.portfolios
 
 DROP POLICY IF EXISTS "Users can read and write own watchlists" ON public.watchlists;
 CREATE POLICY "Users can read and write own watchlists" ON public.watchlists
+  FOR ALL USING (auth.uid() = user_id);
+
+DROP POLICY IF EXISTS "Users can read and write own broker credentials" ON public.broker_credentials;
+CREATE POLICY "Users can read and write own broker credentials" ON public.broker_credentials
   FOR ALL USING (auth.uid() = user_id);
 
 -- Automatic trigger to create a profile & empty portfolio whenever a new user signs up
