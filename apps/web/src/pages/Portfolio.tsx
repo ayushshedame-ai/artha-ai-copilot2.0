@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import MarketSessionBanner from '../components/MarketSessionBanner';
 import { getPositions, getPaperTrades } from '../services/api';
-import { supabase, fetchUserPortfolio, fetchUserBrokerCredentials } from '../services/supabaseClient';
+import { supabase, fetchUserPortfolio, saveUserPortfolio, fetchUserBrokerCredentials } from '../services/supabaseClient';
 import ConnectBrokerModal from '../components/ConnectBrokerModal';
 
 const BASE = '/api';
@@ -81,19 +81,26 @@ const TABLE_CELL: React.CSSProperties = {
 };
 
 const BROKER_NAMES: Record<string, string> = {
-  ANGELONE: '🦅 Angel One (SmartAPI)',
-  ZERODHA:  '🔷 Zerodha Kite',
-  UPSTOX:   '⚡ Upstox Developer',
-  DHAN:     '🏦 DhanHQ',
-  FYERS:    '🦊 Fyers API',
-  PAPER:    '📄 Paper Trading (Demo)',
+  ANGELONE: 'Angel One (SmartAPI)',
+  ZERODHA:  'Zerodha (Kite)',
+  UPSTOX:   'Upstox Developer',
+  DHAN:     'DhanHQ',
+  FYERS:    'Fyers API',
+  PAPER:    'Paper Trading (Demo)',
 };
 
 // ── Main Component ────────────────────────────────────────────────────────────
 export default function Portfolio() {
   const [tab, setTab] = useState<Tab>('holdings');
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
+  const [isAddStockModalOpen, setIsAddStockModalOpen] = useState(false);
   const [activeBroker, setActiveBroker] = useState<{ name: string; mode: string } | null>(null);
+
+  // Manual stock form
+  const [addStockSymbol, setAddStockSymbol] = useState('');
+  const [addStockQty, setAddStockQty] = useState('');
+  const [addStockAvgPrice, setAddStockAvgPrice] = useState('');
+  const [addStockLtp, setAddStockLtp] = useState('');
 
   // Holdings tab state
   const [holdingsData, setHoldingsData] = useState<{
@@ -104,7 +111,14 @@ export default function Portfolio() {
     connected: boolean;
     broker: string | null;
     error?: string;
-  }>({ holdings: [], totalValue: 0, overallPnl: 0, availableFunds: 0, connected: false, broker: null });
+  }>({ 
+    holdings: [], 
+    totalValue: 0, 
+    overallPnl: 0, 
+    availableFunds: 100000, 
+    connected: false, 
+    broker: null 
+  });
   const [holdingsLoading, setHoldingsLoading] = useState(true);
 
   // Positions tab state
@@ -134,6 +148,43 @@ export default function Portfolio() {
             name: BROKER_NAMES[brokerCreds.broker_name] || brokerCreds.broker_name,
             mode: brokerCreds.trading_mode || 'LIVE',
           });
+
+          // Attempt live broker sync
+          try {
+            const syncRes = await fetch(`${BASE}/portfolio/sync-user-broker`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                broker_name: brokerCreds.broker_name,
+                credentials_json: brokerCreds.credentials_json || {},
+              }),
+            });
+            const syncData = await syncRes.json();
+            if (syncData.success && Array.isArray(syncData.holdings) && syncData.holdings.length > 0) {
+              setHoldingsData({
+                holdings: syncData.holdings,
+                totalValue: syncData.totalValue,
+                overallPnl: syncData.overallPnl,
+                availableFunds: syncData.availableFunds || 100000,
+                connected: true,
+                broker: BROKER_NAMES[brokerCreds.broker_name] || brokerCreds.broker_name,
+              });
+
+              // Save synced holdings to Supabase portfolio
+              saveUserPortfolio({
+                user_id: user.id,
+                cash_balance: syncData.availableFunds || 100000,
+                holdings_json: syncData.holdings,
+                positions_json: [],
+                paper_trades_json: [],
+              });
+
+              setHoldingsLoading(false);
+              return;
+            }
+          } catch (e) {
+            console.warn('Live broker sync error:', e);
+          }
         } else {
           setActiveBroker(null);
         }
@@ -153,7 +204,7 @@ export default function Portfolio() {
             broker: brokerCreds ? BROKER_NAMES[brokerCreds.broker_name] : 'User Isolated Account',
           });
         } else {
-          // New Gmail account has no holdings yet — show clean user-isolated empty state
+          // New account empty state
           setHoldingsData({
             holdings: [],
             totalValue: 0,
@@ -197,6 +248,59 @@ export default function Portfolio() {
     return () => clearInterval(id);
   }, []);
 
+  const handleAddStockSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!addStockSymbol || !addStockQty || !addStockAvgPrice) return;
+
+    const qty = Math.abs(parseFloat(addStockQty));
+    const avgPrice = parseFloat(addStockAvgPrice);
+    const ltp = addStockLtp ? parseFloat(addStockLtp) : avgPrice;
+    const currentValue = parseFloat((qty * ltp).toFixed(2));
+    const invested = qty * avgPrice;
+    const pnl = parseFloat((currentValue - invested).toFixed(2));
+    const pnlPct = invested > 0 ? parseFloat(((pnl / invested) * 100).toFixed(2)) : 0;
+
+    const newHolding: Holding = {
+      symbol: addStockSymbol.toUpperCase().trim(),
+      qty,
+      avgPrice,
+      ltp,
+      currentValue,
+      pnl,
+      pnlPct,
+      exchange: 'NSE',
+    };
+
+    const updatedHoldings = [...holdingsData.holdings.filter(h => h.symbol !== newHolding.symbol), newHolding];
+    const totalVal = updatedHoldings.reduce((sum, h) => sum + (h.currentValue || 0), 0);
+    const totalPnl = updatedHoldings.reduce((sum, h) => sum + (h.pnl || 0), 0);
+
+    setHoldingsData(prev => ({
+      ...prev,
+      holdings: updatedHoldings,
+      totalValue: totalVal,
+      overallPnl: totalPnl,
+      connected: true,
+    }));
+
+    const { data } = await supabase.auth.getUser();
+    if (data.user) {
+      await saveUserPortfolio({
+        user_id: data.user.id,
+        cash_balance: holdingsData.availableFunds || 100000,
+        holdings_json: updatedHoldings,
+        positions_json: [],
+        paper_trades_json: [],
+      });
+    }
+
+    setAddStockSymbol('');
+    setAddStockQty('');
+    setAddStockAvgPrice('');
+    setAddStockLtp('');
+    setIsAddStockModalOpen(false);
+  };
+
   return (
     <div>
       <MarketSessionBanner />
@@ -226,20 +330,37 @@ export default function Portfolio() {
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setIsConnectModalOpen(true)}
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            padding: '10px 18px', borderRadius: 12,
-            background: 'linear-gradient(135deg, #6366f1 0%, #a78bfa 100%)',
-            color: '#fff', border: 'none', fontWeight: 700, fontSize: 13,
-            cursor: 'pointer', boxShadow: '0 4px 14px rgba(99,102,241,0.4)',
-            transition: 'transform 0.15s ease',
-          }}
-        >
-          <span>🔗 Connect Broker Account</span>
-        </button>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={() => setIsAddStockModalOpen(true)}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              padding: '10px 16px', borderRadius: 12,
+              background: 'rgba(255,255,255,0.08)',
+              color: '#fff', border: '1px solid rgba(255,255,255,0.15)',
+              fontWeight: 700, fontSize: 13, cursor: 'pointer',
+              transition: 'background 0.15s ease',
+            }}
+          >
+            <span>➕ Add Holding Manually</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsConnectModalOpen(true)}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              padding: '10px 18px', borderRadius: 12,
+              background: 'linear-gradient(135deg, #6366f1 0%, #a78bfa 100%)',
+              color: '#fff', border: 'none', fontWeight: 700, fontSize: 13,
+              cursor: 'pointer', boxShadow: '0 4px 14px rgba(99,102,241,0.4)',
+              transition: 'transform 0.15s ease',
+            }}
+          >
+            <span>🔗 Connect Broker Account</span>
+          </button>
+        </div>
       </div>
 
       {/* ── Tab Switcher ────────────────────────────────────────────────────── */}
@@ -292,21 +413,34 @@ export default function Portfolio() {
                 <div className="card" style={{ padding: 40, textAlign: 'center', color: 'var(--muted)' }}>
                   <div style={{ fontSize: 36, marginBottom: 10 }}>📦</div>
                   <div style={{ fontSize: 16, fontWeight: 700, color: '#fff', marginBottom: 6 }}>
-                    No Holdings Found
+                    No Holdings Found in This Account
                   </div>
-                  <div style={{ fontSize: 13, marginBottom: 20 }}>
-                    Click <strong>Connect Broker Account</strong> to link Angel One, Zerodha, Upstox, Dhan, or Fyers!
+                  <div style={{ fontSize: 13, marginBottom: 20, maxWidth: 450, margin: '0 auto 20px auto' }}>
+                    Connect your broker account (Angel One, Zerodha, Upstox, Dhan, Fyers) to sync live holdings, or add stock holdings manually!
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setIsConnectModalOpen(true)}
-                    style={{
-                      padding: '10px 20px', borderRadius: 10, background: '#6366f1',
-                      color: '#fff', border: 'none', fontWeight: 700, cursor: 'pointer'
-                    }}
-                  >
-                    🔗 Connect Your Broker Account
-                  </button>
+                  <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+                    <button
+                      type="button"
+                      onClick={() => setIsConnectModalOpen(true)}
+                      style={{
+                        padding: '10px 20px', borderRadius: 10, background: '#6366f1',
+                        color: '#fff', border: 'none', fontWeight: 700, cursor: 'pointer',
+                        boxShadow: '0 4px 14px rgba(99,102,241,0.4)',
+                      }}
+                    >
+                      🔗 Connect Broker Account
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIsAddStockModalOpen(true)}
+                      style={{
+                        padding: '10px 20px', borderRadius: 10, background: '#21262d',
+                        color: '#fff', border: '1px solid rgba(255,255,255,0.15)', fontWeight: 700, cursor: 'pointer'
+                      }}
+                    >
+                      ➕ Add Holding Manually
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div className="card" style={{ padding: 0, overflowX: 'auto' }}>
@@ -475,6 +609,134 @@ export default function Portfolio() {
           loadPortfolioData();
         }}
       />
+
+      {/* Manual Add Stock Modal */}
+      {isAddStockModalOpen && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 9999,
+          background: 'rgba(0,0,0,0.85)',
+          backdropFilter: 'blur(12px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: 16,
+          fontFamily: 'system-ui, -apple-system, sans-serif',
+        }}>
+          <div style={{
+            width: '100%', maxWidth: 450,
+            background: '#0d1117',
+            border: '1px solid rgba(255,255,255,0.12)',
+            borderRadius: 20, padding: 24, color: '#fff',
+            boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
+          }}>
+            <h3 style={{ margin: '0 0 16px 0', fontSize: 18, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span>➕ Add Stock Holding</span>
+            </h3>
+
+            <form onSubmit={handleAddStockSubmit}>
+              <div style={{ marginBottom: 14 }}>
+                <label style={{ display: 'block', fontSize: 12, color: 'var(--muted)', marginBottom: 6 }}>
+                  Stock Symbol (e.g. RELIANCE, TATAMOTORS, INFY)
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. TATAMOTORS"
+                  value={addStockSymbol}
+                  onChange={e => setAddStockSymbol(e.target.value)}
+                  style={{
+                    width: '100%', padding: '10px 14px', borderRadius: 10,
+                    background: '#161b22', border: '1px solid rgba(255,255,255,0.12)',
+                    color: '#fff', fontSize: 14, outline: 'none',
+                  }}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 14 }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: 12, color: 'var(--muted)', marginBottom: 6 }}>
+                    Quantity
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    step="any"
+                    placeholder="e.g. 10"
+                    value={addStockQty}
+                    onChange={e => setAddStockQty(e.target.value)}
+                    style={{
+                      width: '100%', padding: '10px 14px', borderRadius: 10,
+                      background: '#161b22', border: '1px solid rgba(255,255,255,0.12)',
+                      color: '#fff', fontSize: 14, outline: 'none',
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: 12, color: 'var(--muted)', marginBottom: 6 }}>
+                    Average Buy Price (₹)
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    step="any"
+                    placeholder="e.g. 950.50"
+                    value={addStockAvgPrice}
+                    onChange={e => setAddStockAvgPrice(e.target.value)}
+                    style={{
+                      width: '100%', padding: '10px 14px', borderRadius: 10,
+                      background: '#161b22', border: '1px solid rgba(255,255,255,0.12)',
+                      color: '#fff', fontSize: 14, outline: 'none',
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div style={{ marginBottom: 20 }}>
+                <label style={{ display: 'block', fontSize: 12, color: 'var(--muted)', marginBottom: 6 }}>
+                  Current Market Price (LTP) (₹)
+                </label>
+                <input
+                  type="number"
+                  step="any"
+                  placeholder="e.g. 985.00 (optional, defaults to Buy Price)"
+                  value={addStockLtp}
+                  onChange={e => setAddStockLtp(e.target.value)}
+                  style={{
+                    width: '100%', padding: '10px 14px', borderRadius: 10,
+                    background: '#161b22', border: '1px solid rgba(255,255,255,0.12)',
+                    color: '#fff', fontSize: 14, outline: 'none',
+                  }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
+                <button
+                  type="button"
+                  onClick={() => setIsAddStockModalOpen(false)}
+                  style={{
+                    padding: '10px 16px', borderRadius: 10,
+                    background: '#21262d', border: 'none', color: '#fff',
+                    fontWeight: 600, fontSize: 13, cursor: 'pointer',
+                  }}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  style={{
+                    padding: '10px 20px', borderRadius: 10,
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    border: 'none', color: '#fff', fontWeight: 700, fontSize: 13,
+                    cursor: 'pointer', boxShadow: '0 4px 14px rgba(16,185,129,0.3)',
+                  }}
+                >
+                  Save Stock
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

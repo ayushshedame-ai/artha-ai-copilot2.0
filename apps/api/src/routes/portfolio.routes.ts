@@ -232,6 +232,140 @@ portfolioRouter.get('/positions', async (_req: Request, res: Response) => {
   }
 });
 
+// ── POST /api/portfolio/sync-user-broker ─────────────────────────────────────
+portfolioRouter.post('/sync-user-broker', async (req: Request, res: Response) => {
+  const { broker_name, credentials_json } = req.body ?? {};
+
+  if (!broker_name || !credentials_json) {
+    return res.status(400).json({ success: false, error: 'Broker name and credentials are required.' });
+  }
+
+  if (broker_name === 'PAPER') {
+    return res.json({
+      success: true,
+      broker: 'Paper Trading (Demo)',
+      holdings: [],
+      availableFunds: 100000,
+      totalValue: 0,
+      overallPnl: 0,
+    });
+  }
+
+  if (broker_name === 'ANGELONE') {
+    const clientId = credentials_json.ANGELONE_CLIENT_ID;
+    const apiKey   = credentials_json.ANGELONE_API_KEY;
+    const pin      = credentials_json.ANGELONE_PIN;
+    const totp     = credentials_json.ANGELONE_TOTP_SECRET;
+
+    if (!clientId || !apiKey || !pin) {
+      return res.status(400).json({ success: false, error: 'Angel One Client ID, API Key, and PIN are required.' });
+    }
+
+    try {
+      // 1. Authenticate with Angel One using user's keys
+      const loginHeaders = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-UserType': 'USER',
+        'X-SourceID': 'WEB',
+        'X-ClientLocalIP': '127.0.0.1',
+        'X-ClientPublicIP': '127.0.0.1',
+        'X-MACAddress': 'fe80::1',
+        'X-PrivateKey': apiKey,
+      };
+
+      const loginRes = await axios.post(
+        'https://apiconnect.angelone.in/rest/auth/angelbroking/user/v1/loginByPassword',
+        { clientcode: clientId, password: pin, totp: totp || '' },
+        { headers: loginHeaders, timeout: 8000 }
+      );
+
+      const loginData = loginRes.data;
+      if (!loginData?.status || !loginData?.data?.jwtToken) {
+        const errorMsg = loginData?.message || loginData?.errorMessage || 'Angel One authentication failed. Verify Client ID, API Key, PIN, and TOTP.';
+        return res.status(400).json({ success: false, error: errorMsg });
+      }
+
+      const jwtToken = loginData.data.jwtToken;
+      const authHeaders = {
+        ...loginHeaders,
+        'Authorization': `Bearer ${jwtToken}`,
+      };
+
+      // 2. Fetch Holdings
+      const holdingsRes = await axios.get(
+        'https://apiconnect.angelone.in/rest/secure/angelbroking/portfolio/v1/getHolding',
+        { headers: authHeaders, timeout: 8000 }
+      );
+
+      let rawHoldings: any[] = [];
+      const hData = holdingsRes.data;
+      if (hData?.status === true && hData?.data) {
+        if (Array.isArray(hData.data)) rawHoldings = hData.data;
+        else if (Array.isArray(hData.data?.holdings)) rawHoldings = hData.data.holdings;
+        else if (Array.isArray(hData.data?.holding)) rawHoldings = hData.data.holding;
+      }
+
+      const holdings = rawHoldings.map(h => {
+        const qty        = Math.abs(parseInt(h.quantity || h.realisedquantity || '0', 10));
+        const avgPrice   = parseFloat(h.averageprice || h.avgprice || '0');
+        const ltp        = parseFloat(h.ltp || h.close || String(avgPrice));
+        const currentVal = qty * ltp;
+        const invested   = qty * avgPrice;
+        const pnl        = parseFloat(h.profitandloss || String(currentVal - invested));
+        const pnlPct     = invested > 0 ? (pnl / invested) * 100 : 0;
+        const sym        = (h.tradingsymbol || 'UNKNOWN').replace('-EQ', '');
+        return {
+          symbol:       sym,
+          qty,
+          avgPrice:     parseFloat(avgPrice.toFixed(2)),
+          ltp:          parseFloat(ltp.toFixed(2)),
+          currentValue: parseFloat(currentVal.toFixed(2)),
+          pnl:          parseFloat(pnl.toFixed(2)),
+          pnlPct:       parseFloat(pnlPct.toFixed(2)),
+          exchange:     h.exchange || 'NSE',
+        };
+      }).filter(h => h.qty > 0);
+
+      const totalValue = holdings.reduce((s, h) => s + h.currentValue, 0);
+      const overallPnl = holdings.reduce((s, h) => s + h.pnl, 0);
+
+      // 3. Fetch Funds (RMS)
+      let availableFunds = 100000;
+      try {
+        const fundsRes = await axios.get(
+          'https://apiconnect.angelone.in/rest/secure/angelbroking/user/v1/getRMS',
+          { headers: authHeaders, timeout: 5000 }
+        );
+        if (fundsRes.data?.data) {
+          availableFunds = parseFloat(fundsRes.data.data.net || fundsRes.data.data.availablecash || '100000');
+        }
+      } catch {}
+
+      return res.json({
+        success: true,
+        broker: 'Angel One (SmartAPI Live)',
+        holdings,
+        totalValue: parseFloat(totalValue.toFixed(2)),
+        overallPnl: parseFloat(overallPnl.toFixed(2)),
+        availableFunds,
+      });
+    } catch (err: any) {
+      const errMsg = err?.response?.data?.message || err?.message || 'Angel One connection error.';
+      return res.status(400).json({ success: false, error: errMsg });
+    }
+  }
+
+  return res.json({
+    success: true,
+    broker: broker_name,
+    holdings: [],
+    availableFunds: 100000,
+    totalValue: 0,
+    overallPnl: 0,
+  });
+});
+
 // ── In-memory paper trade store ───────────────────────────────────────────────
 // Starts empty. Populated only when copilot actually executes paper trades.
 export const paperTrades: any[] = [];
