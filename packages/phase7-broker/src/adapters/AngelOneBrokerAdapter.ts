@@ -9,6 +9,7 @@ import { AngelOneAuthManager } from './AngelOneAuthManager';
 import { AngelOneOrderMapper } from './AngelOneOrderMapper';
 import { AngelOneFillMapper } from './AngelOneFillMapper';
 import { TokenRegistry } from '../../../phase2-market-data/src/marketData/adapters/angelone/TokenRegistry';
+import { angelOneFetch } from './proxyHelper';
 
 export class AngelOneBrokerAdapter implements IBrokerAdapter {
   readonly adapter_mode = 'LIVE';
@@ -58,26 +59,26 @@ export class AngelOneBrokerAdapter implements IBrokerAdapter {
       }
     } catch { /* fall through */ }
 
-    // 3. Angel One Symbol Search API (real-time, no pre-download needed)
+    // 3. Angel One Symbol Search API (real-time, no pre-download needed, routed through proxy)
     try {
-          const clientIp = (process.env.ANGELONE_STATIC_IP || process.env.SMARTAPI_STATIC_IP || '13.57.136.86').trim();
-          const searchRes = await fetch('https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/searchScrip', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Authorization': `Bearer ${authToken}`,
-              'X-UserType': 'USER',
-              'X-SourceID': 'WEB',
-              'X-ClientIP': clientIp,
-              'X-LocalIP': clientIp,
-              'clientlocalip': clientIp,
-              'clientpublicip': clientIp,
-              'X-MACAddress': '00-00-00-00-00-00',
-              'X-PrivateKey': this.clientSecret,
-            },
-            body: JSON.stringify({ exchange: 'NSE', searchscrip: symbol })
-          });
+      const clientIp = (process.env.ANGELONE_STATIC_IP || process.env.SMARTAPI_STATIC_IP || process.env.FIXIE_STATIC_IP || '13.57.136.86').trim();
+      const searchRes = await angelOneFetch('https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/searchScrip', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': `Bearer ${authToken}`,
+          'X-UserType': 'USER',
+          'X-SourceID': 'WEB',
+          'X-ClientIP': clientIp,
+          'X-LocalIP': clientIp,
+          'clientlocalip': clientIp,
+          'clientpublicip': clientIp,
+          'X-MACAddress': '00-00-00-00-00-00',
+          'X-PrivateKey': this.clientSecret,
+        },
+        body: JSON.stringify({ exchange: 'NSE', searchscrip: symbol })
+      });
       const searchData = await searchRes.json() as any;
       if (searchData?.status === true && Array.isArray(searchData.data) && searchData.data.length > 0) {
         // Find exact match (prefer -EQ equity type)
@@ -112,8 +113,8 @@ export class AngelOneBrokerAdapter implements IBrokerAdapter {
     const body = AngelOneOrderMapper.mapToAngelOne(request, symbolToken);
 
     try {
-      const clientIp = (process.env.ANGELONE_STATIC_IP || process.env.SMARTAPI_STATIC_IP || '13.57.136.86').trim();
-      const res = await fetch('https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/placeOrder', {
+      const clientIp = (process.env.ANGELONE_STATIC_IP || process.env.SMARTAPI_STATIC_IP || process.env.FIXIE_STATIC_IP || '13.57.136.86').trim();
+      const res = await angelOneFetch('https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/placeOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -207,7 +208,7 @@ export class AngelOneBrokerAdapter implements IBrokerAdapter {
     }
 
     try {
-      const res = await fetch('https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/cancelOrder', {
+      const res = await angelOneFetch('https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/cancelOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -272,7 +273,7 @@ export class AngelOneBrokerAdapter implements IBrokerAdapter {
     }
 
     try {
-      const res = await fetch(`https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/details/${ref.broker_order_id}`, {
+      const res = await angelOneFetch(`https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/details/${ref.broker_order_id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -347,7 +348,7 @@ export class AngelOneBrokerAdapter implements IBrokerAdapter {
       }
 
       try {
-        const res = await fetch('https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/getOrderBook', {
+        const res = await angelOneFetch('https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/getOrderBook', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

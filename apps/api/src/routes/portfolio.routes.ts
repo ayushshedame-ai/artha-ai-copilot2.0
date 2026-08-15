@@ -13,6 +13,7 @@ import {
   setCachedHoldings,
   clearSession,
   getSessionStatus,
+  getAngelOneAxiosConfig,
 } from '../services/brokerSession';
 
 export const portfolioRouter = Router();
@@ -37,7 +38,8 @@ async function fetchRealHoldings() {
 
   for (const endpoint of endpoints) {
     try {
-      const { data } = await axios.get(endpoint, { headers, timeout: 8000 });
+      const axiosConfig = getAngelOneAxiosConfig({ headers, timeout: 8000 });
+      const { data } = await axios.get(endpoint, axiosConfig);
 
       if (data?.status === true && data?.data) {
         let rawList: any[] = [];
@@ -101,9 +103,10 @@ async function fetchRealFunds(): Promise<number> {
 
   const headers = await getApiHeaders();
   try {
+    const axiosConfig = getAngelOneAxiosConfig({ headers, timeout: 5000 });
     const { data } = await axios.get(
       'https://apiconnect.angelone.in/rest/secure/angelbroking/user/v1/getRMS',
-      { headers, timeout: 5000 }
+      axiosConfig
     );
     if (data?.data) {
       return parseFloat(data.data.net || data.data.availablecash || '0');
@@ -190,9 +193,10 @@ portfolioRouter.get('/positions', async (_req: Request, res: Response) => {
 
   const headers = await getApiHeaders();
   try {
+    const axiosConfig = getAngelOneAxiosConfig({ headers, timeout: 8000 });
     const { data } = await axios.get(
       'https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/getPosition',
-      { headers, timeout: 8000 }
+      axiosConfig
     );
     if (data?.status === true && Array.isArray(data?.data)) {
       const positions = data.data

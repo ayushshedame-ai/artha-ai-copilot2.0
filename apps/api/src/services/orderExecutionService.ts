@@ -15,7 +15,7 @@
 import { capitalVault } from '../../../../packages/phase5-strategy/src/vault/CapitalVault';
 import { RiskGuardian } from '../../../../packages/phase5-strategy/src/vault/RiskGuardian';
 import { SignalEvent } from '../../../../packages/phase5-strategy/src/signals/SignalEvent';
-import { getApiHeaders, getSessionStatus } from './brokerSession';
+import { getApiHeaders, getSessionStatus, angelOneFetch } from './brokerSession';
 import { TradeJournalService } from './tradeJournalService';
 import { pushNotification } from './notificationService';
 
@@ -94,7 +94,7 @@ async function placeAngelOrder(payload: AngelOrderPayload): Promise<OrderResult>
   // Live order via Angel One API
   try {
     const headers = await getApiHeaders();
-    const response = await fetch(`${ANGEL_ONE_API_BASE}/rest/secure/angelbroking/order/v1/placeOrder`, {
+    const response = await angelOneFetch(`${ANGEL_ONE_API_BASE}/rest/secure/angelbroking/order/v1/placeOrder`, {
       method: 'POST',
       headers: { ...headers, 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),

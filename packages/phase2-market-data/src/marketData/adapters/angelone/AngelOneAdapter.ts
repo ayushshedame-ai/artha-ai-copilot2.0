@@ -300,14 +300,37 @@ export class AngelOneAdapter implements IMarketDataAdapter {
         this.closeWebSocket(1001, 'Connect timeout');
       }, WS_CONNECT_TIMEOUT_MS);
 
-      const ws = new WebSocket(WS_URL, {
+      const proxyUrl =
+        process.env.FIXIE_URL ||
+        process.env.QUOTAGUARDSTATIC_URL ||
+        process.env.QUOTAGUARD_URL ||
+        process.env.ANGELONE_PROXY_URL ||
+        process.env.SMARTAPI_PROXY_URL ||
+        process.env.HTTPS_PROXY ||
+        process.env.HTTP_PROXY;
+      let agent: any = undefined;
+      if (proxyUrl) {
+        try {
+          const { HttpsProxyAgent } = require('https-proxy-agent');
+          agent = new HttpsProxyAgent(proxyUrl);
+        } catch {
+          // fallback if https-proxy-agent not installed
+        }
+      }
+
+      const wsOptions: any = {
         headers: {
           'Authorization':  `Bearer ${this.session.jwtToken}`,
           'x-feed-token':   feedToken,
           'x-client-code':  this.extractClientCode(),
           'x-api-key':      this.extractApiKey(),
         },
-      } as unknown as string[]);   // Node.js WebSocket accepts options as second arg
+      };
+      if (agent) {
+        wsOptions.agent = agent;
+      }
+
+      const ws = new WebSocket(WS_URL, wsOptions as unknown as string[]);   // Node.js WebSocket accepts options as second arg
 
       ws.binaryType = 'arraybuffer';
       this.ws = ws;
@@ -542,7 +565,25 @@ export class AngelOneAdapter implements IMarketDataAdapter {
     const timer      = setTimeout(() => controller.abort(), REST_TIMEOUT_MS);
 
     try {
-      const res = await fetch(`${REST_BASE}${path}`, {
+      const proxyUrl =
+        process.env.FIXIE_URL ||
+        process.env.QUOTAGUARDSTATIC_URL ||
+        process.env.QUOTAGUARD_URL ||
+        process.env.ANGELONE_PROXY_URL ||
+        process.env.SMARTAPI_PROXY_URL ||
+        process.env.HTTPS_PROXY ||
+        process.env.HTTP_PROXY;
+      let agent: any = undefined;
+      if (proxyUrl) {
+        try {
+          const { HttpsProxyAgent } = require('https-proxy-agent');
+          agent = new HttpsProxyAgent(proxyUrl);
+        } catch {
+          // fallback if https-proxy-agent not installed
+        }
+      }
+
+      const fetchOptions: any = {
         method:  'POST',
         headers: {
           'Content-Type':  'application/json',
@@ -554,7 +595,19 @@ export class AngelOneAdapter implements IMarketDataAdapter {
         },
         body:    JSON.stringify(body),
         signal:  controller.signal,
-      });
+      };
+
+      if (agent) {
+        fetchOptions.agent = agent;
+        try {
+          if (proxyUrl) {
+            const { ProxyAgent } = require('undici');
+            fetchOptions.dispatcher = new ProxyAgent(proxyUrl);
+          }
+        } catch {}
+      }
+
+      const res = await fetch(`${REST_BASE}${path}`, fetchOptions);
 
       if (!res.ok) {
         return err({

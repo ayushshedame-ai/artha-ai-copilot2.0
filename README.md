@@ -8,7 +8,6 @@ below for exactly what's real vs. stubbed.
 ## Quick start
 
 ```bash
-npm install
 npm run dev
 ```
 

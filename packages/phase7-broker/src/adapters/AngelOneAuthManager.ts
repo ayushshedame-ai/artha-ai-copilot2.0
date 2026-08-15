@@ -4,6 +4,7 @@
  */
 
 import { createHmac } from 'crypto';
+import { angelOneFetch } from './proxyHelper';
 
 export class AngelOneAuthManager {
   private jwtToken: string | null = null;
@@ -46,8 +47,8 @@ export class AngelOneAuthManager {
       // Generate TOTP dynamically using RFC 6238 (30-second window, SHA-1, 6 digits)
       const totpCode = await this.generateTOTP(this.totpSecret);
 
-      const clientIp = (process.env.ANGELONE_STATIC_IP || process.env.SMARTAPI_STATIC_IP || '13.57.136.86').trim();
-      const response = await fetch('https://apiconnect.angelone.in/rest/auth/angelbroking/user/v1/loginByPassword', {
+      const clientIp = (process.env.ANGELONE_STATIC_IP || process.env.SMARTAPI_STATIC_IP || process.env.FIXIE_STATIC_IP || '13.57.136.86').trim();
+      const response = await angelOneFetch('https://apiconnect.angelone.in/rest/auth/angelbroking/user/v1/loginByPassword', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

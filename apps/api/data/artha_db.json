@@ -433,74 +433,116 @@
   ],
   "health_history": [
     {
-      "id": 159,
+      "id": 169,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:43:43.916Z"
+      "recorded_at": "2026-08-15T08:30:21.021Z"
     },
     {
-      "id": 160,
+      "id": 170,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:44:13.913Z"
+      "recorded_at": "2026-08-15T08:30:51.022Z"
     },
     {
-      "id": 161,
+      "id": 171,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:44:43.925Z"
+      "recorded_at": "2026-08-15T08:31:21.031Z"
     },
     {
-      "id": 162,
+      "id": 172,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:45:13.934Z"
+      "recorded_at": "2026-08-15T08:31:51.046Z"
     },
     {
-      "id": 163,
+      "id": 173,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:45:43.941Z"
+      "recorded_at": "2026-08-15T08:32:21.054Z"
     },
     {
-      "id": 164,
+      "id": 174,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:46:13.948Z"
+      "recorded_at": "2026-08-15T08:32:51.056Z"
     },
     {
-      "id": 165,
+      "id": 175,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:46:43.948Z"
+      "recorded_at": "2026-08-15T08:33:21.067Z"
     },
     {
-      "id": 166,
+      "id": 176,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:47:13.957Z"
+      "recorded_at": "2026-08-15T08:33:51.077Z"
     },
     {
-      "id": 167,
+      "id": 177,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:47:43.966Z"
+      "recorded_at": "2026-08-15T08:34:21.083Z"
     },
     {
-      "id": 168,
+      "id": 178,
       "service": "overall",
-      "score": 100,
+      "score": 80,
       "status": "HEALTHY",
-      "recorded_at": "2026-08-04T20:48:13.971Z"
+      "recorded_at": "2026-08-15T08:34:51.092Z"
+    },
+    {
+      "id": 179,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T08:35:21.102Z"
+    },
+    {
+      "id": 180,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T08:35:51.114Z"
+    },
+    {
+      "id": 181,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T08:36:21.128Z"
+    },
+    {
+      "id": 182,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T08:36:51.135Z"
+    },
+    {
+      "id": 183,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T08:37:21.138Z"
+    },
+    {
+      "id": 184,
+      "service": "overall",
+      "score": 80,
+      "status": "HEALTHY",
+      "recorded_at": "2026-08-15T08:37:51.147Z"
     }
   ],
   "system_timeline": [],
@@ -580,7 +622,7 @@
   ],
   "trade_journal": [],
   "_counters": {
-    "health_history": 168,
+    "health_history": 184,
     "notifications": 45,
     "system_timeline": 24,
     "recovery_events": 9,

@@ -5,14 +5,96 @@
  *  - JWT token (cached 2 hours)
  *  - TOTP generation
  *  - Public IP resolution (cached)
+ *  - Static Outbound Proxy Agent (Fixie / QuotaGuard / custom proxy support)
  *  - 2-minute holdings cache (prevents AG8002 rate limiting)
  *
  * All routes (portfolio, trading, system) import from here.
  * Never instantiate separate auth sessions in individual routes.
  */
 
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import crypto from 'crypto';
+import { HttpsProxyAgent } from 'https-proxy-agent';
+
+// ── Outbound Proxy Configuration ──────────────────────────────────────────────
+/**
+ * Returns the configured proxy URL if any.
+ * Checks FIXIE_URL, QUOTAGUARDSTATIC_URL, QUOTAGUARD_URL, ANGELONE_PROXY_URL, SMARTAPI_PROXY_URL, HTTPS_PROXY, HTTP_PROXY.
+ */
+export function getAngelOneProxyUrl(): string | null {
+  const url =
+    process.env.FIXIE_URL ||
+    process.env.QUOTAGUARDSTATIC_URL ||
+    process.env.QUOTAGUARD_URL ||
+    process.env.ANGELONE_PROXY_URL ||
+    process.env.SMARTAPI_PROXY_URL ||
+    process.env.HTTPS_PROXY ||
+    process.env.HTTP_PROXY ||
+    '';
+  return url.trim() || null;
+}
+
+let _cachedProxyAgent: HttpsProxyAgent<string> | null = null;
+let _cachedProxyUrl: string | null = null;
+
+/**
+ * Returns a cached HttpsProxyAgent instance for Angel One API calls.
+ */
+export function getAngelOneProxyAgent(): HttpsProxyAgent<string> | undefined {
+  const proxyUrl = getAngelOneProxyUrl();
+  if (!proxyUrl) return undefined;
+
+  if (_cachedProxyAgent && _cachedProxyUrl === proxyUrl) {
+    return _cachedProxyAgent;
+  }
+
+  _cachedProxyUrl = proxyUrl;
+  _cachedProxyAgent = new HttpsProxyAgent(proxyUrl);
+  return _cachedProxyAgent;
+}
+
+/**
+ * Generates an Axios request config with proxy agent configured if active.
+ */
+export function getAngelOneAxiosConfig(extraConfig: AxiosRequestConfig = {}): AxiosRequestConfig {
+  const agent = getAngelOneProxyAgent();
+  const config: AxiosRequestConfig = {
+    ...extraConfig,
+  };
+
+  if (agent) {
+    config.httpsAgent = agent;
+    config.httpAgent = agent;
+    config.proxy = false; // Disable axios internal env proxy parsing so httpsAgent handles the tunnel
+  }
+
+  return config;
+}
+
+/**
+ * Proxy-aware fetch wrapper for Angel One SmartAPI requests.
+ * Transparently attaches proxy agent/dispatcher if a proxy URL is configured.
+ */
+export async function angelOneFetch(url: string | URL, init: RequestInit = {}): Promise<Response> {
+  const proxyUrl = getAngelOneProxyUrl();
+  const agent = getAngelOneProxyAgent();
+
+  const options: any = { ...init };
+  if (agent) {
+    options.agent = agent;
+    try {
+      if (proxyUrl && !(options as any).dispatcher) {
+        // undici ProxyAgent support for Node 18+ global fetch
+        const { ProxyAgent } = require('undici');
+        options.dispatcher = new ProxyAgent(proxyUrl);
+      }
+    } catch {
+      // undici not present or global fetch handles agent
+    }
+  }
+
+  return fetch(url, options);
+}
 
 // ── Base32 Decoder ─────────────────────────────────────────────────────────────
 function base32Decode(base32: string): Buffer {
@@ -54,13 +136,10 @@ export function generateTOTP(secret: string): string {
 }
 
 // ── Public IP Cache ────────────────────────────────────────────────────────────
-let _cachedIp = '';
-let _ipCachedAt = 0;
-const IP_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
-
 export async function getPublicIp(): Promise<string> {
   if (process.env.ANGELONE_STATIC_IP) return process.env.ANGELONE_STATIC_IP.trim();
   if (process.env.SMARTAPI_STATIC_IP) return process.env.SMARTAPI_STATIC_IP.trim();
+  if (process.env.FIXIE_STATIC_IP) return process.env.FIXIE_STATIC_IP.trim();
   return '13.57.136.86';
 }
 
@@ -77,11 +156,13 @@ export function getSessionStatus(): {
   connected: boolean;
   lastError: string;
   tokenExpiresIn: number;
+  proxyActive: boolean;
 } {
   return {
     connected: !!_jwtToken && Date.now() < _tokenExpiry,
     lastError: _lastLoginError,
     tokenExpiresIn: Math.max(0, Math.floor((_tokenExpiry - Date.now()) / 1000)),
+    proxyActive: !!getAngelOneProxyUrl(),
   };
 }
 
@@ -132,6 +213,7 @@ async function _doLogin(): Promise<string | null> {
 
   const clientIp = await getPublicIp();
   const totp = totpSecret ? generateTOTP(totpSecret) : '000000';
+  const proxyUrl = getAngelOneProxyUrl();
 
   const endpoints = [
     'https://apiconnect.angelone.in/rest/auth/angelbroking/user/v1/loginByPassword',
@@ -140,25 +222,27 @@ async function _doLogin(): Promise<string | null> {
 
   for (const endpoint of endpoints) {
     try {
+      const axiosConfig = getAngelOneAxiosConfig({
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-UserType': 'USER',
+          'X-SourceID': 'WEB',
+          'X-ClientIP': clientIp,
+          'X-LocalIP': clientIp,
+          'clientlocalip': clientIp,
+          'clientpublicip': clientIp,
+          'X-MACAddress': '00-00-00-00-00-00',
+          'X-PrivateKey': apiKey,
+          'api_key': apiKey,
+        },
+        timeout: 10000,
+      });
+
       const { data } = await axios.post(
         endpoint,
         { clientcode: clientId, password, totp },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-UserType': 'USER',
-            'X-SourceID': 'WEB',
-            'X-ClientIP': clientIp,
-            'X-LocalIP': clientIp,
-            'clientlocalip': clientIp,
-            'clientpublicip': clientIp,
-            'X-MACAddress': '00-00-00-00-00-00',
-            'X-PrivateKey': apiKey,
-            'api_key': apiKey,
-          },
-          timeout: 10000,
-        }
+        axiosConfig
       );
 
       if (data?.status === true && data?.data?.jwtToken) {
@@ -167,7 +251,7 @@ async function _doLogin(): Promise<string | null> {
         _feedToken = data.data.feedToken || null;
         _tokenExpiry = Date.now() + 2 * 60 * 60 * 1000; // 2 hours
         _lastLoginError = '';
-        console.log(`[BrokerSession] ✅ Login successful. IP: ${clientIp}`);
+        console.log(`[BrokerSession] ✅ Login successful. IP: ${clientIp}${proxyUrl ? ' (via proxy)' : ''}`);
         return _jwtToken;
       }
 
