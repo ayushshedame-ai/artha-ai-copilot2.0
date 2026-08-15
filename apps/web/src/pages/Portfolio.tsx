@@ -134,11 +134,13 @@ export default function Portfolio() {
             name: BROKER_NAMES[brokerCreds.broker_name] || brokerCreds.broker_name,
             mode: brokerCreds.trading_mode || 'LIVE',
           });
+        } else {
+          setActiveBroker(null);
         }
 
         // Load saved user portfolio from Supabase
         const userPort = await fetchUserPortfolio(user.id);
-        if (userPort && userPort.holdings_json) {
+        if (userPort && Array.isArray(userPort.holdings_json) && userPort.holdings_json.length > 0) {
           const holdings = userPort.holdings_json;
           const totalVal = holdings.reduce((sum: number, h: any) => sum + (h.currentValue || 0), 0);
           const totalPnl = holdings.reduce((sum: number, h: any) => sum + (h.pnl || 0), 0);
@@ -150,17 +152,31 @@ export default function Portfolio() {
             connected: true,
             broker: brokerCreds ? BROKER_NAMES[brokerCreds.broker_name] : 'User Isolated Account',
           });
-          setHoldingsLoading(false);
-          return;
+        } else {
+          // New Gmail account has no holdings yet — show clean user-isolated empty state
+          setHoldingsData({
+            holdings: [],
+            totalValue: 0,
+            overallPnl: 0,
+            availableFunds: userPort?.cash_balance || 100000,
+            connected: !!brokerCreds,
+            broker: brokerCreds ? BROKER_NAMES[brokerCreds.broker_name] : null,
+          });
         }
+        setHoldingsLoading(false);
+        return;
       }
 
-      // Fallback API fetch if no Supabase user portfolio found
-      fetch(`${BASE}/portfolio`)
-        .then(r => r.json())
-        .then(setHoldingsData)
-        .catch(() => {})
-        .finally(() => setHoldingsLoading(false));
+      // Guest / unauthenticated fallback
+      setHoldingsData({
+        holdings: [],
+        totalValue: 0,
+        overallPnl: 0,
+        availableFunds: 0,
+        connected: false,
+        broker: null,
+      });
+      setHoldingsLoading(false);
     });
 
     getPositions().then(setPositionsData);

@@ -6,6 +6,7 @@ import { RiskDashboard } from '../components/RiskDashboard';
 import { OrderBook } from '../components/OrderBook';
 import SuggestionBox from '../components/SuggestionBox';
 import { IpWhitelistBanner } from '../components/IpWhitelistBanner';
+import { supabase, fetchUserPortfolio } from '../services/supabaseClient';
 
 const INITIAL_SIGNALS: Signal[] = [
   {
@@ -71,11 +72,17 @@ export default function Dashboard() {
   useEffect(() => {
     getCopilotTrades().then(setCopilotData);
     getServerIp().then(setServerIp);
-    // Fetch live available balance from broker
-    fetch('/api/portfolio')
-      .then(r => r.json())
-      .then(d => setAvailableFunds(d.availableFunds ?? 0))
-      .catch(() => setAvailableFunds(0));
+    // Fetch live available balance from user's Supabase portfolio
+    supabase.auth.getUser().then(async ({ data }) => {
+      if (data.user) {
+        const port = await fetchUserPortfolio(data.user.id);
+        if (port) {
+          setAvailableFunds(port.cash_balance || 100000);
+          return;
+        }
+      }
+      setAvailableFunds(100000);
+    });
     const id = setInterval(() => getCopilotTrades().then(setCopilotData), 5000);
     return () => clearInterval(id);
   }, []);
