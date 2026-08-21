@@ -199,7 +199,7 @@ async function _runAllChecks() {
   } catch(e) {}
 }
 
-function _updateService(name: string, status: 'HEALTHY' | 'WARNING' | 'DEGRADED' | 'CRITICAL', score: number, message: string) {
+function _updateService(name: string, status: 'HEALTHY' | 'WARNING' | 'DEGRADED' | 'CRITICAL', score: number, message: string, responseTimeMs: number = 2) {
   if (!_serviceStartTimes[name]) {
     _serviceStartTimes[name] = Date.now();
   }
@@ -208,7 +208,7 @@ function _updateService(name: string, status: 'HEALTHY' | 'WARNING' | 'DEGRADED'
     status,
     score,
     lastCheck: new Date().toISOString(),
-    responseTimeMs: Math.floor(Math.random() * 50) + 10,
+    responseTimeMs: Math.max(1, responseTimeMs),
     errorCount: status === 'HEALTHY' ? 0 : 1,
     uptime: Date.now() - _serviceStartTimes[name],
     message

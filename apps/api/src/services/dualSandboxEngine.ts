@@ -37,6 +37,7 @@ export interface SandboxTrade {
   sandbox: 'MICRO' | 'MACRO';
   stopLoss?: number;
   takeProfit?: number;
+  rMultiple?: number;
 }
 
 export interface SandboxState {
@@ -224,13 +225,20 @@ export function placeSandboxTrade(
       const pnl = (price - openTrade.price) * Math.min(qty, openTrade.qty);
       const pnlPct = ((price - openTrade.price) / openTrade.price) * 100;
 
-      trade.exitPrice = openTrade.price;
+      // Mathematical R-Multiple calculation: (Exit - Entry) / Initial Risk per share
+      const initialRiskPerShare = (openTrade.stopLoss && openTrade.stopLoss !== openTrade.price)
+        ? Math.abs(openTrade.price - openTrade.stopLoss)
+        : openTrade.price * 0.02; // 2% default risk proxy
+      const rMult = initialRiskPerShare > 0 ? (price - openTrade.price) / initialRiskPerShare : 0;
+
+      trade.exitPrice = price;
       trade.pnl = parseFloat(pnl.toFixed(2));
       trade.pnlPct = parseFloat(pnlPct.toFixed(2));
+      trade.rMultiple = parseFloat(rMult.toFixed(2));
       trade.status = 'CLOSED';
       trade.exitTime = new Date().toISOString();
 
-      sandbox.availableCash += finalTradeValue + pnl;
+      sandbox.availableCash += (openTrade.qty * openTrade.price) + pnl;
       sandbox.investedValue -= openTrade.qty * openTrade.price;
       sandbox.totalPnL += pnl;
 
@@ -242,8 +250,8 @@ export function placeSandboxTrade(
     }
   }
 
-  // Recalculate totals
-  sandbox.currentCapital = sandbox.availableCash + sandbox.investedValue + sandbox.totalPnL;
+  // Recalculate totals (availableCash already includes realized PnL)
+  sandbox.currentCapital = parseFloat((sandbox.availableCash + sandbox.investedValue).toFixed(2));
   sandbox.totalPnLPct = parseFloat(((sandbox.currentCapital - sandbox.initialCapital) / sandbox.initialCapital * 100).toFixed(2));
   sandbox.winRate = (sandbox.winCount + sandbox.lossCount) > 0
     ? parseFloat((sandbox.winCount / (sandbox.winCount + sandbox.lossCount) * 100).toFixed(1))
@@ -264,6 +272,11 @@ export function placeSandboxTrade(
 
 // ── Get Sandbox Summary ────────────────────────────────────────────────────────
 export function getSandboxSummary(sandbox: SandboxState) {
+  const closedTradesWithR = sandbox.trades.filter(t => t.status === 'CLOSED' && typeof t.rMultiple === 'number');
+  const avgRMultiple = closedTradesWithR.length > 0
+    ? parseFloat((closedTradesWithR.reduce((sum, t) => sum + (t.rMultiple || 0), 0) / closedTradesWithR.length).toFixed(2))
+    : 0;
+
   return {
     id: sandbox.id,
     label: sandbox.label,
@@ -278,6 +291,7 @@ export function getSandboxSummary(sandbox: SandboxState) {
     winCount: sandbox.winCount,
     lossCount: sandbox.lossCount,
     winRate: sandbox.winRate,
+    avgRMultiple,
     maxDrawdown: sandbox.maxDrawdown,
     peakCapital: parseFloat(sandbox.peakCapital.toFixed(2)),
     allowedStrategies: sandbox.allowedStrategies,

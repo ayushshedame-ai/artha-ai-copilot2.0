@@ -97,12 +97,6 @@ export class TradeJournalService {
   static getPerformanceMetrics(initialCapital = 1_000_000): PerformanceSummary {
     const all = tradeJournal.getAll(500);
 
-    // If database is empty, seed demo trades so user sees realistic analytics on first load
-    if (all.length === 0) {
-      this.seedDemoTrades();
-      return this.getPerformanceMetrics(initialCapital);
-    }
-
     const records: TradeRecord[] = all.map(t => ({
       trade_id: t.trade_id,
       symbol: t.symbol,

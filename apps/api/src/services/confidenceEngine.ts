@@ -90,28 +90,59 @@ export function calculateMACD(closes: number[]): { macdLine: number[]; signalLin
   return { macdLine, signalLine, histogram };
 }
 
-// Simple rule-based sentiment scanner for Indian stocks news
-async function scanNewsSentiment(symbol: string): Promise<{ sentiment: 'BULLISH' | 'BEARISH' | 'NEUTRAL'; score: number }> {
+import { newsCache, refreshNewsFeed } from '../routes/news.routes';
+
+// Real rule-based sentiment scanner using actual live RSS feeds and NewsAPI
+async function scanNewsSentiment(symbol: string): Promise<{ sentiment: 'BULLISH' | 'BEARISH' | 'NEUTRAL'; score: number; headline?: string }> {
   try {
     const cleanSym = symbol.toUpperCase().trim();
     
-    // Simulate some positive bias for inherently strong stocks or randomize slightly for realism
-    let hash = 0;
-    for (let i = 0; i < cleanSym.length; i++) {
-      hash = cleanSym.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const seed = Math.abs(hash) % 100;
-    let score = 0;
-    if (seed > 60) {
-      score = 0.4; // Slightly positive
-    } else if (seed < 30) {
-      score = -0.2; // Slightly negative
-    } else {
-      score = 0.1; // Neutral-positive
+    // Ensure we have news in cache
+    if (!newsCache || newsCache.length === 0) {
+      await refreshNewsFeed().catch(() => {});
     }
 
-    const sentiment = score > 0.2 ? 'BULLISH' : score < -0.1 ? 'BEARISH' : 'NEUTRAL';
-    return { sentiment, score };
+    // 1. Look for direct mentions of this symbol in recent live news
+    const symbolNews = newsCache.filter(item => {
+      if (item.symbol && item.symbol.toUpperCase() === cleanSym) return true;
+      const text = item.headline.toUpperCase();
+      return text.includes(cleanSym);
+    });
+
+    if (symbolNews.length > 0) {
+      let bullCount = 0;
+      let bearCount = 0;
+      symbolNews.forEach(item => {
+        if (item.sentiment === 'BULLISH') bullCount++;
+        else if (item.sentiment === 'BEARISH') bearCount++;
+      });
+
+      const total = bullCount + bearCount;
+      const score = total > 0 ? (bullCount - bearCount) / total : 0;
+      const sentiment = score > 0.1 ? 'BULLISH' : score < -0.1 ? 'BEARISH' : 'NEUTRAL';
+      return { 
+        sentiment, 
+        score: parseFloat(score.toFixed(2)),
+        headline: symbolNews[0].headline
+      };
+    }
+
+    // 2. If no direct stock mention, check broader market sentiment (NIFTY/Macro)
+    const macroNews = newsCache.filter(item => !item.symbol || item.symbol === 'NIFTY50' || item.symbol === 'SENSEX');
+    if (macroNews.length > 0) {
+      let bullCount = 0;
+      let bearCount = 0;
+      macroNews.forEach(item => {
+        if (item.sentiment === 'BULLISH') bullCount++;
+        else if (item.sentiment === 'BEARISH') bearCount++;
+      });
+      const total = bullCount + bearCount;
+      const score = total > 0 ? ((bullCount - bearCount) / total) * 0.5 : 0; // damped macro score
+      const sentiment = score > 0.15 ? 'BULLISH' : score < -0.15 ? 'BEARISH' : 'NEUTRAL';
+      return { sentiment, score: parseFloat(score.toFixed(2)) };
+    }
+
+    return { sentiment: 'NEUTRAL', score: 0 };
   } catch {
     return { sentiment: 'NEUTRAL', score: 0 };
   }
@@ -214,13 +245,17 @@ export async function calculateConfidence(symbol: string): Promise<ConfidenceRep
   // News Sentiment (Weight: 20)
   let newsDirection: 'BULLISH' | 'BEARISH' | 'NEUTRAL' = newsSentiment.sentiment;
   let newsContribution = 10;
-  let newsMessage = 'News sentiment is neutral.';
+  let newsMessage = 'News sentiment is neutral across Indian market feeds.';
   if (newsSentiment.sentiment === 'BULLISH') {
     newsContribution = 20;
-    newsMessage = 'News headlines show positive corporate catalysts and outlook.';
+    newsMessage = newsSentiment.headline
+      ? `Positive catalyst: "${newsSentiment.headline.slice(0, 60)}..."`
+      : 'News headlines show positive corporate catalysts and bullish market flows.';
   } else if (newsSentiment.sentiment === 'BEARISH') {
     newsContribution = 0;
-    newsMessage = 'News headlines contain warning signs or negative sentiment.';
+    newsMessage = newsSentiment.headline
+      ? `Negative alert: "${newsSentiment.headline.slice(0, 60)}..."`
+      : 'News headlines contain risk alerts, selling pressure or negative sentiment.';
   }
 
   // 5. Overall Confidence Calculation

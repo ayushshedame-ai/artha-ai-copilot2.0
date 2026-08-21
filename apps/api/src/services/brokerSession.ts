@@ -13,6 +13,16 @@
 
 import axios from 'axios';
 import crypto from 'crypto';
+import { HttpsProxyAgent } from 'https-proxy-agent';
+
+// ── Proxy Agent Setup (Fixie / QuotaGuard / Static Proxy) ────────────────────
+export function getProxyAgent(): HttpsProxyAgent<string> | undefined {
+  const proxyUrl = (process.env.FIXIE_URL || process.env.HTTPS_PROXY || process.env.HTTP_PROXY || process.env.PROXY_URL || '').trim();
+  if (proxyUrl) {
+    return new HttpsProxyAgent(proxyUrl);
+  }
+  return undefined;
+}
 
 // ── Base32 Decoder ─────────────────────────────────────────────────────────────
 function base32Decode(base32: string): Buffer {
@@ -125,13 +135,18 @@ async function _doLogin(): Promise<string | null> {
   const password   = (process.env.ANGELONE_PASSWORD      || process.env.SMARTAPI_PASSWORD || process.env.SMARTAPI_PIN || '').trim();
   const totpSecret = (process.env.ANGELONE_TOTP_SECRET  || process.env.SMARTAPI_TOTP_SECRET || '').trim();
 
-  if (!clientId || !apiKey || clientId.includes('your_')) {
-    _lastLoginError = 'Missing ANGELONE_CLIENT_ID or ANGELONE_CLIENT_SECRET (or SMARTAPI_*) credentials';
+  if (!clientId || !apiKey || clientId.includes('your_') || apiKey.includes('your_')) {
+    _lastLoginError = 'Missing or placeholder ANGELONE_CLIENT_ID / ANGELONE_CLIENT_SECRET credentials';
+    return null;
+  }
+
+  if (!password || !totpSecret || totpSecret.includes('your_')) {
+    _lastLoginError = 'Missing or placeholder ANGELONE_PASSWORD (MPIN) / ANGELONE_TOTP_SECRET credentials';
     return null;
   }
 
   const clientIp = await getPublicIp();
-  const totp = totpSecret ? generateTOTP(totpSecret) : '000000';
+  const totp = generateTOTP(totpSecret);
 
   const endpoints = [
     'https://apiconnect.angelone.in/rest/auth/angelbroking/user/v1/loginByPassword',
@@ -157,6 +172,7 @@ async function _doLogin(): Promise<string | null> {
             'X-PrivateKey': apiKey,
             'api_key': apiKey,
           },
+          httpsAgent: getProxyAgent(),
           timeout: 10000,
         }
       );

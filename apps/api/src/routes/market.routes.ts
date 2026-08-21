@@ -289,7 +289,51 @@ const BASE_PRICES: Record<string, number> = {
 // ── Seed latestTicks with real Yahoo Finance closing prices on startup ────────
 const WATCHLIST_SYMBOLS = ['RELIANCE', 'TCS', 'INFY', 'HDFCBANK', 'CUPID', 'ZOMATO', 'SILVERBEES'];
 
+// ── Live India VIX Tracker ───────────────────────────────────────────────────
+let _cachedIndiaVix: number = 14.5;
+let _vixLastFetchedAt: number = 0;
+const VIX_CACHE_TTL = 2 * 60 * 1000; // 2 minutes
+
+export async function getLiveIndiaVix(): Promise<number> {
+  if (_cachedIndiaVix > 0 && Date.now() - _vixLastFetchedAt < VIX_CACHE_TTL) {
+    return _cachedIndiaVix;
+  }
+  try {
+    const url = 'https://query1.finance.yahoo.com/v8/finance/chart/%5EINDIAVIX?interval=1d&range=5d';
+    const { data } = await axios.get(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' },
+      timeout: 4000,
+    });
+    const meta = data?.chart?.result?.[0]?.meta;
+    if (meta) {
+      const vix = meta.regularMarketPrice || meta.previousClose;
+      if (vix && vix > 0) {
+        _cachedIndiaVix = parseFloat(vix.toFixed(2));
+        _vixLastFetchedAt = Date.now();
+        console.log(`[MarketData] 📉 Live India VIX: ${_cachedIndiaVix}`);
+        return _cachedIndiaVix;
+      }
+    }
+  } catch (err: any) {
+    console.warn('[MarketData] ⚠️ Failed to fetch live India VIX from Yahoo Finance:', err.message);
+  }
+  return _cachedIndiaVix || 14.5;
+}
+
+marketRouter.get('/vix', async (_req: Request, res: Response) => {
+  const vix = await getLiveIndiaVix();
+  res.json({
+    symbol: 'INDIAVIX',
+    vix,
+    regime: vix > 20 ? 'HIGH_VOLATILITY' : vix < 13 ? 'LOW_VOLATILITY' : 'NORMAL',
+    timestamp: new Date().toISOString(),
+  });
+});
+
 async function seedPricesFromYahoo(): Promise<void> {
+  // Also refresh VIX
+  await getLiveIndiaVix().catch(() => {});
+
   for (const symbol of WATCHLIST_SYMBOLS) {
     try {
       const ticker = toYahooTicker(symbol);
@@ -505,21 +549,54 @@ marketRouter.get('/candles', async (req: Request, res: Response) => {
 });
 
 marketRouter.get('/movers', async (_req: Request, res: Response) => {
-  res.json({
-    gainers: [
-      { symbol: 'CUPID', name: 'Cupid Ltd', change: 8.2, price: 215.4, volume: 450000 },
-      { symbol: 'KPITTECH', name: 'KPIT Technologies', change: 4.1, price: 1680, volume: 230000 },
-      { symbol: 'HAL', name: 'Hindustan Aeronautics', change: 3.7, price: 4120, volume: 180000 },
-    ],
-    losers: [
-      { symbol: 'PAYTM', name: 'Paytm', change: -3.2, price: 880, volume: 890000 },
-      { symbol: 'ZOMATO', name: 'Zomato', change: -1.8, price: 265, volume: 560000 },
-    ],
-    upperCircuit: [
-      { symbol: 'CUPID', name: 'Cupid Ltd', circuit: 10, price: 215.4 },
-    ],
-    lowerCircuit: [],
-  });
+  const ticks = Array.from(latestTicks.values());
+  if (ticks.length === 0) {
+    return res.json({ gainers: [], losers: [], upperCircuit: [], lowerCircuit: [] });
+  }
+
+  const sorted = [...ticks].sort((a, b) => (b.changePercent || 0) - (a.changePercent || 0));
+  const gainers = sorted
+    .filter(t => (t.changePercent || 0) > 0)
+    .slice(0, 5)
+    .map(t => ({
+      symbol: t.symbol,
+      name: t.symbol,
+      change: parseFloat((t.changePercent || 0).toFixed(2)),
+      price: t.price,
+      volume: t.volume || 0,
+    }));
+
+  const losers = sorted
+    .filter(t => (t.changePercent || 0) < 0)
+    .reverse()
+    .slice(0, 5)
+    .map(t => ({
+      symbol: t.symbol,
+      name: t.symbol,
+      change: parseFloat((t.changePercent || 0).toFixed(2)),
+      price: t.price,
+      volume: t.volume || 0,
+    }));
+
+  const upperCircuit = sorted
+    .filter(t => (t.changePercent || 0) >= 9.8)
+    .map(t => ({
+      symbol: t.symbol,
+      name: t.symbol,
+      circuit: parseFloat((t.changePercent || 0).toFixed(2)),
+      price: t.price,
+    }));
+
+  const lowerCircuit = sorted
+    .filter(t => (t.changePercent || 0) <= -9.8)
+    .map(t => ({
+      symbol: t.symbol,
+      name: t.symbol,
+      circuit: parseFloat((t.changePercent || 0).toFixed(2)),
+      price: t.price,
+    }));
+
+  res.json({ gainers, losers, upperCircuit, lowerCircuit });
 });
 
 marketRouter.get('/stream', (req: Request, res: Response) => {

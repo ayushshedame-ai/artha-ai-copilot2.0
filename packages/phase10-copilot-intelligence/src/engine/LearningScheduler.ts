@@ -66,10 +66,15 @@ export class LearningScheduler {
     if (!this.trainingInProgress) {
       const now = new Date();
       // Retrain daily at 4:00 PM IST (16:00)
-      const istString = now.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-      const istDate = new Date(istString);
-      const hour = istDate.getHours();
-      const minute = istDate.getMinutes();
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'Asia/Kolkata',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: false,
+      });
+      const parts = formatter.formatToParts(now);
+      const hour = parseInt(parts.find(p => p.type === 'hour')?.value || '0', 10);
+      const minute = parseInt(parts.find(p => p.type === 'minute')?.value || '0', 10);
 
       // Trigger once daily in the 4:00 PM - 4:15 PM IST window
       if (hour === 16 && minute >= 0 && minute <= 15) {

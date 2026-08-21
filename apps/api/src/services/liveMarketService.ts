@@ -346,7 +346,10 @@ export async function initLiveMarketFeed(
   _signalEngine = signalEngine;
 
   const isDemo = process.env.DEMO_MODE === 'true';
-  const apiKey = (process.env.SMARTAPI_API_KEY || '').trim();
+  const apiKey = (process.env.ANGELONE_API_KEY || process.env.SMARTAPI_API_KEY || '').trim();
+  const clientId = (process.env.ANGELONE_CLIENT_ID || process.env.SMARTAPI_CLIENT_ID || '').trim();
+  const mpin = (process.env.ANGELONE_PASSWORD || process.env.ANGELONE_PIN || process.env.SMARTAPI_PASSWORD || process.env.SMARTAPI_PIN || '').trim();
+  const totpSecret = (process.env.ANGELONE_TOTP_SECRET || process.env.SMARTAPI_TOTP_SECRET || '').trim();
 
   // Route incoming ticks from EventBus to the tick processor
   bus.on('TICK_RECEIVED', (event: any) => {
@@ -354,7 +357,7 @@ export async function initLiveMarketFeed(
     handleIncomingTick(tick.symbol, tick.price, tick.volume || 100);
   });
 
-  if (isDemo || !apiKey || apiKey.includes('your_')) {
+  if (isDemo || !apiKey || !clientId || apiKey.includes('your_') || clientId.includes('your_')) {
     console.log('[LiveMarket] Starting in MOCK mode (Demo Mode is ON or credentials missing).');
     _adapter = new MockMarketDataAdapter(bus);
     await _adapter.connect();
@@ -362,9 +365,6 @@ export async function initLiveMarketFeed(
   }
 
   console.log('[LiveMarket] Starting in LIVE Angel One SmartAPI mode.');
-  const clientId = (process.env.SMARTAPI_CLIENT_ID || '').trim();
-  const mpin = (process.env.SMARTAPI_PASSWORD || process.env.SMARTAPI_PIN || '').trim();
-  const totpSecret = (process.env.SMARTAPI_TOTP_SECRET || '').trim();
 
   const creds = {
     clientId,

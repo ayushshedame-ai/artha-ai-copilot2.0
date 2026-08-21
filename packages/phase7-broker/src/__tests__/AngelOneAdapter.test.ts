@@ -87,7 +87,7 @@ describe('AngelOneFillMapper', () => {
 });
 
 describe('AngelOneBrokerAdapter', () => {
-  test('falls back to successful mock response when client credentials are placeholder values', async () => {
+  test('rejects execution when client credentials are placeholder values', async () => {
     const adapter = new AngelOneBrokerAdapter('your_client_id', 'client_secret', 'pwd', 'totp_secret');
     const request: OrderRequest = {
       order_request_id: 'attempt-123',
@@ -106,8 +106,7 @@ describe('AngelOneBrokerAdapter', () => {
     };
 
     const res = await adapter.placeOrder(request);
-    expect(res.raw_status).toBe('SUCCESS');
-    expect(res.normalized_status).toBe('OPEN');
-    expect(res.broker_order_id).not.toBeNull();
+    expect(res.normalized_status).toBe('REJECTED');
+    expect(res.broker_order_id).toBeNull();
   });
 });

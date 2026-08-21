@@ -42,18 +42,33 @@ export class SmallCapRiskProfile {
 
   /**
    * Get the ATR multiplier based on small-cap tier, current market volatility state, and trading mode.
+   * Supports both 4-argument (mode, tier, isVolatile, isBull) and 3-argument (tier, isVolatile, isBull).
    */
   static getAtrMultiplier(
-    mode: TradingMode,
-    tier: SmallCapTier,
-    isVolatile: boolean,
-    isBull: boolean
+    modeOrTier: TradingMode | SmallCapTier,
+    tierOrVolatile?: SmallCapTier | boolean,
+    isVolatileOrBull?: boolean,
+    isBullParam?: boolean
   ): number {
-    const maps = mode === 'SWING' ? this.SWING_MULTIPLIERS : this.INTRADAY_MULTIPLIERS;
-    const multipliers = maps[tier] || maps.LARGECAP;
-    if (isVolatile) return multipliers.volatile;
-    if (isBull) return multipliers.bull;
-    return multipliers.neutral;
+    if (modeOrTier === 'INTRADAY' || modeOrTier === 'SWING') {
+      const mode = modeOrTier as TradingMode;
+      const tier = (tierOrVolatile as SmallCapTier) || 'LARGECAP';
+      const isVolatile = !!isVolatileOrBull;
+      const isBull = !!isBullParam;
+      const maps = mode === 'SWING' ? this.SWING_MULTIPLIERS : this.INTRADAY_MULTIPLIERS;
+      const multipliers = maps[tier] || maps.LARGECAP;
+      if (isVolatile) return multipliers.volatile;
+      if (isBull) return multipliers.bull;
+      return multipliers.neutral;
+    } else {
+      const tier = modeOrTier as SmallCapTier;
+      const isVolatile = !!tierOrVolatile;
+      const isBull = !!isVolatileOrBull;
+      const multipliers = this.INTRADAY_MULTIPLIERS[tier] || this.INTRADAY_MULTIPLIERS.LARGECAP;
+      if (isVolatile) return multipliers.volatile;
+      if (isBull) return multipliers.bull;
+      return multipliers.neutral;
+    }
   }
 
   /**

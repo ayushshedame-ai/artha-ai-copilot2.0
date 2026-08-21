@@ -223,10 +223,11 @@ async function executeTool(name: string, args: Record<string, any>): Promise<str
           }
         } catch { /* fall through */ }
 
-        // Last resort fallback
+        // Last resort when price cannot be fetched
         return JSON.stringify({
           symbol: upperSymbol,
-          price: 260.21,
+          error: `Live price unavailable for ${upperSymbol}. Market may be closed or symbol not found.`,
+          price: null,
           change: 0,
           changePercent: '0.00',
         });

@@ -30,15 +30,22 @@ describe('LearningScheduler', () => {
 
     const scheduler = new LearningScheduler(mockGuard, mockTraining);
 
-    // Mock Date.prototype.toLocaleString to return a specific hour (4:05 PM IST)
-    const originalToLocaleString = Date.prototype.toLocaleString;
-    Date.prototype.toLocaleString = jest.fn().mockReturnValue('19/07/2026, 16:05:00');
+    // Mock Date so Intl.DateTimeFormat in Asia/Kolkata returns hour: 16, minute: 5
+    // 16:05 IST is 10:35 UTC
+    const mockDate = new Date('2026-07-19T10:35:00.000Z');
+    const originalDate = global.Date;
+    global.Date = class extends Date {
+      constructor() {
+        super();
+        return mockDate;
+      }
+    } as any;
 
     try {
       await (scheduler as any).checkAndSchedule();
       expect(mockTraining).toHaveBeenCalled();
     } finally {
-      Date.prototype.toLocaleString = originalToLocaleString;
+      global.Date = originalDate;
     }
   });
 
@@ -49,16 +56,22 @@ describe('LearningScheduler', () => {
 
     const scheduler = new LearningScheduler(mockGuard, mockTraining);
 
-    // Mock Date to 2:00 PM (14:00) IST
-    const originalToLocaleString = Date.prototype.toLocaleString;
-    Date.prototype.toLocaleString = jest.fn().mockReturnValue('19/07/2026, 14:00:00');
+    // Mock Date to 2:00 PM (14:00) IST -> 08:30 UTC
+    const mockDate = new Date('2026-07-19T08:30:00.000Z');
+    const originalDate = global.Date;
+    global.Date = class extends Date {
+      constructor() {
+        super();
+        return mockDate;
+      }
+    } as any;
 
     try {
       mockTraining.mockClear();
       await (scheduler as any).checkAndSchedule();
       expect(mockTraining).not.toHaveBeenCalled();
     } finally {
-      Date.prototype.toLocaleString = originalToLocaleString;
+      global.Date = originalDate;
     }
   });
 });

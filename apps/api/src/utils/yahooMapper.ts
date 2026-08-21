@@ -4,6 +4,8 @@
 
 export function toYahooTicker(symbol: string): string {
   const upper = symbol.toUpperCase().trim();
+  // Index tickers like ^INDIAVIX or ^NSEI should not have .NS appended
+  if (upper.startsWith('^')) return upper;
   // ZOMATO is represented as ETERNAL.NS on Yahoo Finance
   if (upper === 'ZOMATO') return 'ETERNAL.NS';
   if (upper === 'ZOMATO.NS') return 'ETERNAL.NS';

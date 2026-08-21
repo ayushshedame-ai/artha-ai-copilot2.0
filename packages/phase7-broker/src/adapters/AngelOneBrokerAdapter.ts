@@ -105,13 +105,13 @@ export class AngelOneBrokerAdapter implements IBrokerAdapter {
 
   async placeOrder(request: OrderRequest): Promise<BrokerResponse> {
     const startTime = Date.now();
-    const token = await this.authManager.getAuthToken();
-
-    // Resolve symbol token AFTER getting auth token (search API needs it)
-    const symbolToken = await this.resolveSymbolToken(request.symbol_id, token);
-    const body = AngelOneOrderMapper.mapToAngelOne(request, symbolToken);
 
     try {
+      const token = await this.authManager.getAuthToken();
+      // Resolve symbol token AFTER getting auth token (search API needs it)
+      const symbolToken = await this.resolveSymbolToken(request.symbol_id, token);
+      const body = AngelOneOrderMapper.mapToAngelOne(request, symbolToken);
+
       const clientIp = (process.env.ANGELONE_STATIC_IP || process.env.SMARTAPI_STATIC_IP || '13.57.136.86').trim();
       const res = await fetch('https://apiconnect.angelone.in/rest/secure/angelbroking/order/v1/placeOrder', {
         method: 'POST',
@@ -327,6 +327,7 @@ export class AngelOneBrokerAdapter implements IBrokerAdapter {
   ): BrokerSubscription {
     const subscription_id = `sub-${Math.random().toString(36).substring(2, 11)}`;
     let active = true;
+    const processedOrderIds = new Set<string>();
 
     // Stream polling: check order log every 2 seconds
     const interval = setInterval(async () => {
@@ -334,15 +335,6 @@ export class AngelOneBrokerAdapter implements IBrokerAdapter {
       
       const token = await this.authManager.getAuthToken();
       if (token === 'offline-session-fallback' || token.startsWith('simulated-')) {
-        // Offline demo loop: randomly generate a mock fill occasionally
-        if (Math.random() > 0.8) {
-          const mockFill = AngelOneFillMapper.mapToFill(
-            `req-${Math.random().toString(36).substring(2, 11)}`,
-            { orderid: `brk-${Math.random().toString(36).substring(2, 11)}`, averageprice: '2895.00', filledshares: '10', status: 'complete', transactiontype: 'BUY' },
-            2890.00
-          );
-          onFill(mockFill);
-        }
         return;
       }
 
@@ -359,9 +351,10 @@ export class AngelOneBrokerAdapter implements IBrokerAdapter {
 
         const data = await res.json() as any;
         if (data && data.status === true && Array.isArray(data.data)) {
-          // Process completed orders in response list
+          // Process completed orders in response list with deduplication
           for (const order of data.data) {
-            if (order.status?.toLowerCase() === 'complete') {
+            if (order.status?.toLowerCase() === 'complete' && order.orderid && !processedOrderIds.has(order.orderid)) {
+              processedOrderIds.add(order.orderid);
               const fill = AngelOneFillMapper.mapToFill(
                 `req-${order.orderid}`,
                 order,

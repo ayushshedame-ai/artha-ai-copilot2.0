@@ -77,8 +77,35 @@ const SYMBOL_TOKENS: Record<string, string> = {
   SILVRBEES: '2845', SILVERBEES: '2845', PAYTM: '10604',
 };
 
-function getToken(symbol: string): string {
-  return SYMBOL_TOKENS[symbol.toUpperCase()] ?? '0';
+const dynamicTokenCache = new Map<string, string>();
+
+export async function resolveToken(symbol: string): Promise<string> {
+  const upper = symbol.toUpperCase();
+  if (SYMBOL_TOKENS[upper]) return SYMBOL_TOKENS[upper];
+  if (dynamicTokenCache.has(upper)) return dynamicTokenCache.get(upper)!;
+
+  try {
+    const headers = await getApiHeaders();
+    const res = await fetch(`${ANGEL_ONE_API_BASE}/rest/secure/angelbroking/order/v1/searchScrip`, {
+      method: 'POST',
+      headers: { ...headers, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ exchange: 'NSE', searchscrip: upper }),
+    });
+    const data: any = await res.json();
+    if (data?.status === true && Array.isArray(data.data) && data.data.length > 0) {
+      const match = data.data.find((s: any) =>
+        s.tradingsymbol === `${upper}-EQ` || s.tradingsymbol === upper
+      ) || data.data[0];
+      if (match?.symboltoken) {
+        dynamicTokenCache.set(upper, match.symboltoken);
+        console.log(`[OrderExecution] Resolved ${upper} -> token ${match.symboltoken} via search API`);
+        return match.symboltoken;
+      }
+    }
+  } catch (err: any) {
+    console.warn(`[OrderExecution] Failed to dynamically search symbol token for ${upper}:`, err.message);
+  }
+  return '0';
 }
 
 // ── Core Order Placement ──────────────────────────────────────────────────────
@@ -169,10 +196,11 @@ export async function executeSignal(signal: SignalEvent): Promise<{
 
   // ── Step 4: Place order ───────────────────────────────────────────────────
   const direction: TransactionType = signal.direction === 'LONG' ? 'BUY' : 'SELL';
+  const token = await resolveToken(signal.symbol);
   const orderPayload: AngelOrderPayload = {
     variety: 'NORMAL',
     tradingsymbol: signal.symbol,
-    symboltoken: getToken(signal.symbol),
+    symboltoken: token,
     transactiontype: direction,
     exchange: signal.exchange as 'NSE' | 'BSE',
     ordertype: 'MARKET',

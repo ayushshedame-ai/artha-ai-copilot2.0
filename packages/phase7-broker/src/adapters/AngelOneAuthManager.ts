@@ -34,12 +34,9 @@ export class AngelOneAuthManager {
    * Logs in to Angel One SmartAPI using client ID, password, and TOTP.
    */
   private async login(): Promise<void> {
-    // If credentials are dummy/mock placeholders, use simulated authentication
+    // If credentials are dummy/mock placeholders, reject with clear error in LIVE mode
     if (!this.clientId || this.clientId.includes('your_') || !this.totpSecret) {
-      console.log('[AngelOneAuth] Warning: Using simulated auth token (offline mode).');
-      this.jwtToken = 'simulated-jwt-token-' + Math.random().toString(36).substring(2);
-      this.tokenExpiry = Date.now() + 2 * 60 * 60 * 1000; // 2 hours
-      return;
+      throw new Error('Cannot authenticate with Angel One: Missing or unconfigured ANGELONE_CLIENT_ID / TOTP secret in environment.');
     }
 
     try {

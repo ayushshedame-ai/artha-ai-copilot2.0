@@ -45,17 +45,9 @@ tradingRouter.post('/orders', async (req: Request, res: Response) => {
 
   try {
     const brokerResponse = await adapter.placeOrder(orderRequest);
-    let success = brokerResponse.normalized_status === 'OPEN' || brokerResponse.normalized_status === 'FILLED';
+    const success = brokerResponse.normalized_status === 'OPEN' || brokerResponse.normalized_status === 'FILLED';
     const payload = brokerResponse.raw_payload ?? {};
-    const rejectReason = brokerResponse.reject_reason || '';
-    const isIpError = rejectReason.toLowerCase().includes('registered ip') || rejectReason.toLowerCase().includes('ip address') || !!payload.ipWhitelistRequired;
-
-    let isSimulated = false;
-    if (!success && isIpError) {
-      success = true;
-      isSimulated = true;
-      console.log(`[Trading] ⚡ Angel One Cloud IP Whitelist pending. Order executed via Live Simulation.`);
-    }
+    const rejectReason = brokerResponse.reject_reason || null;
 
     const record = {
       order_request_id: orderId,
@@ -65,22 +57,19 @@ tradingRouter.post('/orders', async (req: Request, res: Response) => {
       price: orderRequest.price || null,
       order_type: orderRequest.order_type,
       product_type: orderRequest.product_type === 'MIS' ? 'INTRADAY' : 'DELIVERY',
-      broker_order_id: brokerResponse.broker_order_id || `sim-${orderId}`,
+      broker_order_id: brokerResponse.broker_order_id || null,
       status: success ? 'OPEN' : 'REJECTED',
-      reject_reason: isSimulated ? 'Executed via Live Simulation (Cloud IP Pending)' : (rejectReason || null),
+      reject_reason: rejectReason,
       executed_at: new Date().toISOString(),
     };
 
     orderStore.set(orderId, record);
-    console.log(`[Trading] Order ${record.status} via ${provider}: ${record.direction} ${record.qty} ${record.symbol} @ ${record.price || 'MARKET'} | Reason: ${record.reject_reason || 'OK'}`);
+    console.log(`[Trading] Order ${record.status} via ${provider}: ${record.direction} ${record.qty} ${record.symbol} @ ${record.price || 'MARKET'} | Reason: ${rejectReason || 'OK'}`);
 
     return res.json({
-      success: true,
+      success,
       order: record,
-      isSimulated,
-      message: isSimulated
-        ? '✅ Order Executed via Live Simulation (Angel One Cloud IP Pending)'
-        : '✅ Order Placed Directly on Angel One',
+      message: success ? 'Order Placed Directly on Angel One' : (rejectReason || 'Order rejected by broker'),
       raw_payload: payload,
     });
   } catch (err: any) {
@@ -118,8 +107,28 @@ tradingRouter.post('/orders', async (req: Request, res: Response) => {
       });
     }
 
-    // ── Generic fallback: simulated order for dev/test ───────────────────────
-    const simRecord = {
+    // ── If explicitly in DEMO_MODE, return simulated order ───────────────────
+    if (process.env.DEMO_MODE === 'true') {
+      const simRecord = {
+        order_request_id: orderId,
+        symbol: symbol.toUpperCase(),
+        direction,
+        qty: parseInt(qty, 10),
+        price: price ? parseFloat(price) : null,
+        order_type: order_type || 'MARKET',
+        product_type: product_type || 'DELIVERY',
+        broker_order_id: `sim-${orderId}`,
+        status: 'SIMULATED',
+        reject_reason: null,
+        executed_at: new Date().toISOString(),
+      };
+      orderStore.set(orderId, simRecord);
+      console.log(`[Trading] Demo mode simulated order for ${symbol} - Qty: ${qty}`);
+      return res.json({ success: true, order: simRecord, simulated: true });
+    }
+
+    // ── Live mode execution failure — report rejection honestly ───────────────
+    const failedRecord = {
       order_request_id: orderId,
       symbol: symbol.toUpperCase(),
       direction,
@@ -127,14 +136,18 @@ tradingRouter.post('/orders', async (req: Request, res: Response) => {
       price: price ? parseFloat(price) : null,
       order_type: order_type || 'MARKET',
       product_type: product_type || 'DELIVERY',
-      broker_order_id: `sim-${orderId}`,
-      status: 'SIMULATED',
-      reject_reason: null,
+      broker_order_id: null,
+      status: 'REJECTED',
+      reject_reason: err.message || 'Broker order execution failed',
       executed_at: new Date().toISOString(),
     };
-    orderStore.set(orderId, simRecord);
-    console.log(`[Trading] Simulated order for ${symbol} - Qty: ${qty} (broker error: ${err.message})`);
-    return res.json({ success: true, order: simRecord, simulated: true });
+    orderStore.set(orderId, failedRecord);
+    console.error(`[Trading] Live order FAILED for ${symbol}: ${err.message}`);
+    return res.status(400).json({
+      success: false,
+      error: err.message || 'Broker order execution failed',
+      order: failedRecord,
+    });
   }
 });
 

@@ -20,10 +20,10 @@ describe('CapitalVault Engine', () => {
     expect(vault.getStatus().peakCapital).toBe(10_000);
   });
 
-  test('rejects allocation below ₹100', () => {
-    const res = vault.setAllocation(50);
+  test('rejects negative allocation', () => {
+    const res = vault.setAllocation(-50);
     expect(res.success).toBe(false);
-    expect(res.message).toContain('Minimum allocation is ₹100');
+    expect(res.message).toContain('Allocation cannot be negative');
   });
 
   test('reserves capital for valid trade and updates available balance', () => {
@@ -61,12 +61,12 @@ describe('CapitalVault Engine', () => {
     expect(compVault.getAllocatedCapital()).toBe(10_500);
   });
 
-  test('enforces PAPER mode when allocation < ₹2,000 for brokerage protection', () => {
+  test('warns when switching to LIVE with allocation < ₹2,000 for brokerage protection', () => {
     vault.setAllocation(500); // Below ₹2,000 threshold
     const res = vault.setMode('LIVE');
-    expect(res.success).toBe(false);
-    expect(res.message).toContain('Minimum capital for live trading is ₹2,000');
-    expect(vault.getMode()).toBe('PAPER');
+    expect(res.success).toBe(true);
+    expect(res.message).toContain('below the recommended');
+    expect(vault.getMode()).toBe('LIVE');
   });
 
   test('allows LIVE mode when allocation >= ₹2,000', () => {

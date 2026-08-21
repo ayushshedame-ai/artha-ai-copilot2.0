@@ -48,6 +48,8 @@ const MAX_EXPOSURE_PCT: Record<TradeStrategy, number> = {
   SWING:    0.30,   // up to 30% of capital in swing
 };
 
+import { getLiveIndiaVix } from '../routes/market.routes';
+
 // VIX-based risk multiplier
 function getVixMultiplier(vix: number): number {
   if (vix < 12) return 1.25;     // Very low vol — can take more risk
@@ -58,14 +60,24 @@ function getVixMultiplier(vix: number): number {
 }
 
 /**
- * Core dynamic threshold calculator.
+ * Core dynamic threshold calculator with automatic Live India VIX integration.
  * Called before every trade to determine: LIVE / PAPER / BLOCK
  */
+export async function computeThresholdsWithLiveVix(
+  availableCapital: number,
+  strategy: TradeStrategy,
+  stockPrice: number,
+  regime: string = 'NEUTRAL',
+): Promise<ThresholdResult> {
+  const vix = await getLiveIndiaVix();
+  return computeThresholds(availableCapital, strategy, stockPrice, vix, regime);
+}
+
 export function computeThresholds(
   availableCapital: number,
   strategy: TradeStrategy,
   stockPrice: number,
-  vix: number = 15,
+  vix: number = 14.5,
   regime: string = 'NEUTRAL',
 ): ThresholdResult {
   const txCost = TRANSACTION_COSTS[strategy];

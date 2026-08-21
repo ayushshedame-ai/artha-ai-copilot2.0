@@ -185,7 +185,7 @@ export function subscribeSignals(onSignal: (sig: Signal) => void): () => void {
   return () => source.close();
 }
 
-export async function placeOrder(order: { symbol: string; direction: string; qty: number; order_type: string }) {
+export async function placeOrder(order: { symbol: string; direction: string; qty: number; order_type: string; price?: number }) {
   const res = await fetch(`${BASE}/trading/orders`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
